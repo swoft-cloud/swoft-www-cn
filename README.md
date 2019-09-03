@@ -13,8 +13,6 @@
 $ git clone https://github.com/swoft-cloud/swoft-doc.git
 # 切换目录
 $ cd swoft-doc
-# 切换到 hugo-2.x 分支
-$ git checkout hugo-2.x
 # 下载 Hugo 的主题
 $ git submodule update --init --recursive
 # 启动本地服务
