@@ -14,30 +14,37 @@ lastmod = "2018-09-20"
 组件功能介绍和使用场景
 
 ## 准备
-了解组件，需要额外的知识
-### 知识点x
-### 知识点x
 
+了解组件，需要额外的知识
+
+### 知识点1
+
+### 知识点2
 
 ## 安装
+
 通过 Composer 安装
-```
+
+```shell
 composer require swoft/xxx
 ```
 
 ## 注解
 
 ### @XxxAnnotation
+
 注解功能描述
+
 - `arg` 注解功能描述
 - `arg2` 注解功能描述
 
-
 ## 用法
+
 以不同的使用场景，概括用法点，所有介绍切入点，都为使用场景。
+
 ### 实体
 
-**重要函数介绍格式**
+重要函数介绍格式
 
 ```php
 // 全局函数格式
@@ -54,7 +61,7 @@ public function xxx(string $c) : int
 
 - `$a` 参数介绍
 - `$b` 参数介绍
--  返回值介绍
+- 返回值介绍
 
 > 重要说明
 
@@ -85,7 +92,8 @@ foreach ($headers as $name => $values) {
 **命令介绍格式**
 
 命令功能介绍，贴出帮助信息
-```
+
+```shell
 $ php bin/swoft http
 Provide some commands to manage the swoft HTTP Server
 
@@ -121,12 +129,14 @@ Example:
 - `restart` 命令描述
 
 命令xx用法
-```
+
+```shell
 php bin/swoft http:start
 ```
 
 命令xx用法
-```
+
+```shell
 php bin/swoft http:stop
 ```
 
@@ -135,6 +145,7 @@ php bin/swoft http:stop
 **Bean配置格式**
 
 描述配置功能
+
 ```php
 return [
     // ...
@@ -147,11 +158,11 @@ return [
 ```
 
 参数列表：
+
 - `host` 参数功能描述
 - `port` 参数功能描述
 
 > 重要说明
-
 
 **表结构格式**
 
