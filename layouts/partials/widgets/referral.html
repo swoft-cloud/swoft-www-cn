@@ -1,0 +1,48 @@
+{{ $st := .page }}
+{{ $columns := $st.Params.design.columns | default "2" }}
+<div class="row">
+  {{ if ne $columns "1" }}
+  {{ with $st.Params.referral_logo}} <img src="img/{{.}}" alt="logo"> {{end}}
+  {{ with $st.Title }}<h1>{{ . | markdownify | emojify }}</h1>{{ end }}
+  {{ with $st.Params.subtitle }}<p>{{ . | markdownify | emojify }}</p>{{ end }}
+</div>
+<div class="col-12 col-lg-8">
+  {{ $st.Content }}
+</div>
+{{ else }}
+<div class="col-lg-12">
+  <div class="d-flex flex-column justify-content-center align-items-center">
+    {{ with $st.Params.referral_logo}} <img src="img/{{.}}" alt="logo"> {{end}}
+    {{ with $st.Title }}<h1>{{ . | markdownify | emojify }}</h1>{{ end }}
+    {{ with $st.Params.subtitle }}<p>{{ . | markdownify | emojify }}</p>{{ end }}
+    {{ $st.Content }}
+
+
+    <div class="d-flex justify-content-center align-items-center">
+
+      <a href="{{$st.Params.btn_url}}" class="btn btn-primary rounded-pill" role="button" aria-pressed="true">
+        <i class="fas fa-book pr-1" aria-hidden="true"></i>
+        起 步
+      </a>
+
+      <a href="{{$st.Params.btn_url}}" class="btn btn-outline-primary rounded-pill ml-3" role="button"
+        aria-pressed="true">
+        <i class="fas fa-download pr-1" aria-hidden="true"></i>
+        下 载
+      </a>
+
+
+      <a href="{{$st.Params.btn_url}}" class="btn btn-light rounded-pill ml-3" role="button" aria-pressed="true">
+        <i class="fab fa-github pr-1" aria-hidden="true"></i>
+        GITHUB
+      </a>
+
+
+
+    </div>
+
+
+  </div>
+</div>
+{{ end }}
+</div>
