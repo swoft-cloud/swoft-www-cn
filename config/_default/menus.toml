@@ -3,30 +3,56 @@
 #     desired widget in your `content/home/` folder.
 #   The weight parameter defines the order that the links will appear in.
 
+
+
 [[main]]
-  name = "Home"
-  url = "#about"
+  name = "首页"
+  url = "#home"
   weight = 10
 
 [[main]]
-  name = "Posts"
-  url = "#posts"
+  name = "文档"
+  url = "documents"
   weight = 20
+  identifier = "documents"
 
 [[main]]
-  name = "Projects"
-  url = "#projects"
+  name = "v2.x 文档"
+  url = "documents/v2"
+  weight = 21
+  parent = "documents"
+
+[[main]]
+  name = "v1.x 文档"
+  url = "documents/v1"
+  weight = 22
+  parent = "documents"
+
+[[main]]
+  name = "团队"
+  url = "#"
   weight = 30
 
 [[main]]
-  name = "Publications"
-  url = "#featured"
+  name = "赞助"
+  url = "#"
   weight = 40
 
 [[main]]
-  name = "Contact"
-  url = "#contact"
-  weight = 60
+  name = "多语言"
+  weight = 50
+  identifier = "translations"
+
+[[main]]
+  name = "English"
+  weight = 51
+  parent = "translations"
+
+[[main]]
+  name = "中文"
+  weight = 52
+  parent = "translations"
+
 
 # Link to a PDF of your resume/CV from the menu.
 # To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.
@@ -34,3 +60,49 @@
 #    name = "CV"
 #    url = "files/cv.pdf"
 #    weight = 70
+
+# v2文档一级菜单
+[[v2]]
+  name = "框架概述"
+  weight = 1
+  url = "/documents/v2/"
+[[v2]]
+  name = "开发基础"
+  weight = 10
+  identifier = "dev-basis"
+[[v2]]
+  name = "开发指南"
+  weight = 20
+  identifier = "dev-guide"
+[[v2]]
+  name = "快速开始"
+  weight = 30
+  identifier = "quick-start"
+[[v2]]
+  name = "开发工具"
+  weight = 40
+  identifier = "dev-tools"
+[[v2]]
+  name = "基础组件"
+  weight = 50
+  identifier = "basic-components"
+[[v2]]
+  name = "核心组件"
+  weight = 60
+  identifier = "core-components"
+[[v2]]
+  name = "扩展组件"
+  weight = 70
+  identifier = "ext-components"
+[[v2]]
+  name = "微服务"
+  weight = 80
+  identifier = "microservice"
+  [[v2]]
+  name = "贡献"
+  weight = 90
+  identifier = "contribute"
+  [[v2]]
+  name = "附录"
+  weight = 100
+  identifier = "appendix"
