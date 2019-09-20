@@ -30,12 +30,12 @@
 
 [[main]]
   name = "团队"
-  url = "#"
+  url = "authors/"
   weight = 30
 
 [[main]]
   name = "赞助"
-  url = "#sponsor"
+  url = "donation/"
   weight = 40
 
 [[main]]

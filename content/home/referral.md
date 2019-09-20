@@ -8,6 +8,8 @@ referral_logo = "icon.png"
 title = "Swoft Framework"
 subtitle = "PHP 微服务协程框架，可以用于构建高性能的Web系统、API、中间件、基础服务"
 btn_url = "/documents/v2/"
+download_url = "https://github.com/swoft-cloud/swoft/releases"
+github_url = "https://github.com/swoft-cloud/swoft"
 
 [design]
   # Choose how many columns the section has. Valid values: 1 or 2.
