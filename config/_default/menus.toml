@@ -7,7 +7,7 @@
 
 [[main]]
   name = "首页"
-  url = "/"
+  url = "#referral"
   weight = 10
 
 [[main]]
@@ -35,7 +35,7 @@
 
 [[main]]
   name = "赞助"
-  url = "#"
+  url = "#sponsor"
   weight = 40
 
 [[main]]

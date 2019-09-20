@@ -10,3 +10,10 @@
 .docs-toc-item.active {
     margin-bottom: 0;
 }
+
+#case #logos img{
+    transition: all 0.3s ease;
+    max-width: 140px;
+    max-height: 90px;
+    margin:15px;
+}

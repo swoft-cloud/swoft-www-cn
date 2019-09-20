@@ -8,6 +8,10 @@ weight = 20  # Order that this section will appear.
 title = "框架特性"
 subtitle = ""
 
+[design.spacing]
+  # Customize the section spacing. Order is top, right, bottom, left.
+  padding = ["40px", "0"]
+
 # Showcase personal skills or business features.
 # 
 # Add/remove as many `[[feature]]` blocks below as you like.

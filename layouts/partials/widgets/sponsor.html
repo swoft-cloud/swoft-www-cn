@@ -16,21 +16,15 @@
     {{ with $st.Title }}<h1>{{ . | markdownify | emojify }}</h1>{{ end }}
     {{ with $st.Params.subtitle }}<p>{{ . | markdownify | emojify }}</p>{{ end }}
     {{ $st.Content }}
-    <div class="d-flex justify-content-center align-items-center">
-      <a href="{{$st.Params.btn_url}}" class="btn btn-primary rounded-pill" role="button" aria-pressed="true">
-        <i class="fas fa-book pr-1" aria-hidden="true"></i>
-        起 步
-      </a>
-      <a href="{{$st.Params.btn_url}}" class="btn btn-outline-primary rounded-pill ml-3" role="button"
-        aria-pressed="true">
-        <i class="fas fa-download pr-1" aria-hidden="true"></i>
-        下 载
-      </a>
-      <a href="{{$st.Params.btn_url}}" class="btn btn-light rounded-pill ml-3" role="button" aria-pressed="true">
-        <i class="fab fa-github pr-1" aria-hidden="true"></i>
-        GITHUB
-      </a>
-    </div>
+    <a href="{{$st.Params.btn_url}}" class="btn btn-outline-primary rounded-pill mt-4" role="button"
+      aria-pressed="true">
+      成为赞助者！
+    </a>
+
+
+
+
+
   </div>
 </div>
 {{ end }}

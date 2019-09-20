@@ -1,13 +1,11 @@
 +++
-widget = "referral"  # See https://sourcethemes.com/academic/docs/page-builder/
+widget = "sponsor"  # See https://sourcethemes.com/academic/docs/page-builder/
 headless = true  # This file represents a page section.
 active = true  # Activate this widget? true/false
-weight = 10  # Order that this section will appear.
+weight = 30  # Order that this section will appear.
 
-referral_logo = "icon.png"
-title = "Swoft Framework"
-subtitle = "PHP 微服务协程框架，可以用于构建高性能的Web系统、API、中间件、基础服务"
-btn_url = "/documents/v2/"
+title = "赞助商"
+subtitle = ""
 
 [design]
   # Choose how many columns the section has. Valid values: 1 or 2.
@@ -35,7 +33,7 @@ btn_url = "/documents/v2/"
 
 [design.spacing]
   # Customize the section spacing. Order is top, right, bottom, left.
-  padding = ["80px", "0"]
+  padding = ["40px", "0"]
 
 [advanced]
  # Custom CSS. 
@@ -44,3 +42,11 @@ btn_url = "/documents/v2/"
  # CSS class.
  css_class = ""
 +++
+
+<div class="d-flex justify-content-around align-items-center">
+<a class="mr-3" href="#"><img src="img/icon.png" /></a>
+<a class="mr-3" href="#"><img src="img/icon.png" /></a>
+<a class="mr-3" href="#"><img src="img/icon.png" /></a>
+<a class="mr-3" href="#"><img src="img/icon.png" /></a>
+<a href="#"><img src="img/icon.png" /></a>
+</div>
