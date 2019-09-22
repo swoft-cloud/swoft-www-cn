@@ -1,5 +1,5 @@
 +++
-title = "Redis"
+title = "配置"
 toc = true
 type = "docs"
 draft = false
@@ -7,8 +7,9 @@ date = "2018-09-19"
 lastmod = "2018-09-20"
 
 [menu.v2]
-  parent = "core-components"
-  weight = 9
+  parent = "mysql"
+  weight = 1
+  identifier = "mysql-config"
 +++
 
 ## 概念介绍

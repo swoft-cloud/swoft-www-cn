@@ -8,7 +8,7 @@ lastmod = "2018-09-20"
 
 [menu.v2]
   parent = "core-components"
-  weight = 10
+  weight = 9
 +++
 
 ## 概念介绍

@@ -86,23 +86,36 @@
   name = "基础组件"
   weight = 50
   identifier = "basic-components"
+
 [[v2]]
   name = "核心组件"
   weight = 60
   identifier = "core-components"
+
+
+[[v2]]
+  name = "MYSQL"
+  weight = 70
+  identifier = "mysql"
+
+[[v2]]
+  name = "Redis"
+  weight = 80
+  identifier = "redis"
+
 [[v2]]
   name = "扩展组件"
-  weight = 70
+  weight = 90
   identifier = "ext-components"
 [[v2]]
   name = "微服务"
-  weight = 80
+  weight = 100
   identifier = "microservice"
   [[v2]]
   name = "贡献"
-  weight = 90
+  weight = 110
   identifier = "contribute"
   [[v2]]
   name = "附录"
-  weight = 100
+  weight = 120
   identifier = "appendix"

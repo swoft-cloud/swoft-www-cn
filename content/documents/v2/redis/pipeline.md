@@ -1,5 +1,5 @@
 +++
-title = "国际化"
+title = "管道"
 toc = true
 type = "docs"
 draft = false
@@ -7,8 +7,10 @@ date = "2018-09-19"
 lastmod = "2018-09-20"
 
 [menu.v2]
-  parent = "core-components"
-  weight = 10
+  parent = "redis"
+  weight = 4
+  identifier = "redis-pipline"
+
 +++
 
 ## 概念介绍
