@@ -9,6 +9,20 @@
     margin: 15px;
 }
 
+
+/* modify docs width */
+
+.docs-article-container {
+    max-width: 1050px;
+}
+
+
+/* skills padding */
+
+#skills .col-sm-4 {
+    padding: 0px 45px;
+}
+
 pre,
 code {
     color: #42b983;
