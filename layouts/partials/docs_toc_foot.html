@@ -1,0 +1,25 @@
+<ul class="nav toc-top mb-4" style="border-left: 1px solid #eee;">
+    <li>
+        <div class="d-flex">
+            {{if .NextInSection}}
+            <a href="{{.NextInSection.RelPermalink}}" rel="next"><i class="fas fa-arrow-left"></i> </a> {{end}} {{if .PrevInSection}}
+            <a href="{{.PrevInSection.RelPermalink}}" rel="prev"><i class="fas fa-arrow-right"></i> </a> {{end}}
+        </div>
+
+    </li>
+</ul>
+
+
+
+<div class="connect-widget">
+    <ul class="connect-links fa-ul">
+        <li><i class="fa-li fas fa-comments"></i><a href="https://github.com/swoft-cloud/swoft/issues" target="_blank">请求功能</a></li>
+        <li><i class="fa-li fas fa-bug"></i><a href="https://github.com/swoft-cloud/swoft/issues" target="_blank">报告问题</a></li>
+    </ul>
+</div>
+
+
+
+
+<!-- 'qzone', 'qq', 'weibo','wechat', 'douban', 'google', 'facebook', 'twitter' -->
+<div class="social-share" data-disabled="douban,tencent,diandian,linkedin,facebook,twitter,google"></div>
