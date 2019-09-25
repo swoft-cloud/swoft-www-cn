@@ -5,6 +5,7 @@ type = "docs"
 draft = false
 date = "2018-09-19"
 lastmod = "2018-09-20"
+weight = 602
 
 [menu.v2]
   parent = "core-components"
