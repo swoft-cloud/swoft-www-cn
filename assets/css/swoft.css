@@ -1,19 +1,162 @@
-@media(min-width: 768px) {
-    @supports(position:-webkit-sticky) or (position:sticky) {
-        .docs-links {
-            max-height:calc(100vh - 70px);
-            overflow-y: auto
-        }
-    }
-}
-
 .docs-toc-item.active {
     margin-bottom: 0;
 }
 
-#case #logos img{
+#case #logos img {
     transition: all 0.3s ease;
     max-width: 140px;
     max-height: 90px;
-    margin:15px;
+    margin: 15px;
+}
+
+pre,
+code {
+    color: #42b983;
+    background-color: transparent;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.75rem;
+    margin: 45px 0 0.8rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin: 40px 0 0.6rem;
+}
+
+h4 {
+    font-size: 1.25rem;
+}
+
+h5 {
+    font-size: 1rem;
+}
+
+h6 {
+    font-size: 1rem;
+    color: #777;
+}
+
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+
+
+/* code highlight */
+
+.hljs .hljs-boolean,
+.hljs .hljs-number {
+    color: #c76b29;
+}
+
+.hljs .hljs-punctuation {
+    color: #525252;
+}
+
+.hljs .hljs-property {
+    color: #c08b30;
+}
+
+.hljs .hljs-tag {
+    color: #2973b7;
+}
+
+.hljs .hljs-string {
+    color: var(--theme-color, #42b983);
+}
+
+.hljs .hljs-selector {
+    color: #6679cc;
+}
+
+.hljs .hljs-attr-name {
+    color: #2973b7;
+}
+
+.hljs .hljs-entity,
+.hljs .hljs-url,
+.language-css .hljs .hljs-string,
+.style .hljs .hljs-string {
+    color: #22a2c9;
+}
+
+.hljs .hljs-attr-value,
+.hljs .hljs-control,
+.hljs .hljs-directive,
+.hljs .hljs-unit {
+    color: var(--theme-color, #42b983);
+}
+
+.hljs .hljs-keyword,
+.hljs .hljs-function {
+    color: #e96900;
+}
+
+.hljs .hljs-statement,
+.hljs .hljs-regex,
+.hljs .hljs-atrule {
+    color: #22a2c9;
+}
+
+.hljs .hljs-placeholder,
+.hljs .hljs-variable {
+    color: #3d8fd1;
+}
+
+.hljs .hljs-deleted {
+    text-decoration: line-through;
+}
+
+.hljs .hljs-inserted {
+    border-bottom: 1px dotted #202746;
+    text-decoration: none;
+}
+
+.hljs .hljs-italic {
+    font-style: italic;
+}
+
+.hljs .hljs-important,
+.hljs .hljs-bold {
+    font-weight: bold;
+}
+
+.hljs .hljs-important {
+    color: #c94922;
+}
+
+.hljs .hljs-entity {
+    cursor: help;
+}
+
+.article pre {
+    position: relative;
+}
+
+.article code::after {
+    color: #ccc;
+    /* content: " (" attr(class) ")"; */
+    font-size: 0.6rem;
+    font-weight: 600;
+    height: 15px;
+    line-height: 15px;
+    padding: 5px 10px 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+}
+
+.article pre>code {
+    padding: 2.2em 5px;
+    border-radius: 2px;
+    margin: 0 4px;
 }
