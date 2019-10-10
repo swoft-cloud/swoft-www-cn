@@ -1,42 +1,39 @@
-# [Academic Kickstart](https://sourcethemes.com/academic/)
+# Swoft Framework
 
-**Academic** makes it easy to create a beautiful website for free using Markdown, Jupyter, or RStudio. Customize anything on your site with widgets, themes, and language packs. [Check out the latest demo](https://academic-demo.netlify.com/) of what you'll get in less than 10 minutes, or [view the showcase](https://sourcethemes.com/academic/#expo).
+[中文](https://github.com/swoft-cloud/swoft-www-cn) | English
 
-**Academic Kickstart** provides a minimal template to kickstart your new website.
+该网站建立在[huog](https://gohugo.io)上，并基于[Academic Kickstart](https://sourcethemes.com/academic/)主题开发，文档的内容位于 `content /documents /` 文件夹内部格式为Markdown。
 
-- [**Get Started**](#install)
-- [View the documentation](https://sourcethemes.com/academic/docs/)
-- [Ask a question](http://discuss.gohugo.io/)
-- [Request a feature or report a bug](https://github.com/gcushen/hugo-academic/issues)
-- Updating? View the [Update Guide](https://sourcethemes.com/academic/docs/update/) and [Release Notes](https://sourcethemes.com/academic/updates/)
-- Support development of Academic:
-  - [Donate a coffee](https://paypal.me/cushen)
-  - [Become a backer on Patreon](https://www.patreon.com/cushen)
-  - [Decorate your laptop or journal with an Academic sticker](https://www.redbubble.com/people/neutreno/works/34387919-academic)
-  - [Wear the T-shirt](https://academic.threadless.com/)
+## 开发
 
-[![Screenshot](https://raw.githubusercontent.com/gcushen/hugo-academic/master/academic.png)](https://github.com/gcushen/hugo-academic/)
+您需要了解[huog](https://gohugo.io)的基础知识，并掌握[Academic Kickstart](https://sourcethemes.com/academic/)模板。
 
-## Install
+```bash
+# 克隆项目
+$ git clone https://github.com/swoft-cloud/swoft-doc.git
+# 切换目录
+$ cd swoft-doc
+# 下载雨果主题
+$ git submodule update --init --recursive
+# 启动本地服务
+$ hugo server
+```
 
-You can choose from one of the following four methods to install:
+## 部署
 
-* [**one-click install using your web browser (recommended)**](https://sourcethemes.com/academic/docs/install/#install-with-web-browser)
-* [install on your computer using **Git** with the Command Prompt/Terminal app](https://sourcethemes.com/academic/docs/install/#install-with-git)
-* [install on your computer by downloading the **ZIP files**](https://sourcethemes.com/academic/docs/install/#install-with-zip)
-* [install on your computer with **RStudio**](https://sourcethemes.com/academic/docs/install/#install-with-rstudio)
+This site uses [netlify](https://netlify.com) to automate continuous integration of the `master` branch.
 
-Then [personalize your new site](https://sourcethemes.com/academic/docs/get-started/).
+## How to participate in the contribution
 
-## Ecosystem
+Currently the website is in development and everyone is welcome:
 
-* **[Academic Admin](https://github.com/sourcethemes/academic-admin):** An admin tool to import publications from BibTeX or import assets for an offline site
-* **[Academic Scripts](https://github.com/sourcethemes/academic-scripts):** Scripts to help migrate content to new versions of Academic
+* Participate in website style development
+* Participate in the preparation of document content
+* Fix typos or wrong writing format
+* Issue issue Discussion translation or writing format
+* Issue an issue to discuss related suggestions or questions
+* Participate in the translation of English documents.
 
-## License
+note:
 
-Copyright 2017-present [George Cushen](https://georgecushen.com).
-
-Released under the [MIT](https://github.com/sourcethemes/academic-kickstart/blob/master/LICENSE.md) license.
-
-[![Analytics](https://ga-beacon.appspot.com/UA-78646709-2/academic-kickstart/readme?pixel)](https://github.com/igrigorik/ga-beacon)
+In principle, only the construction of the official website of the document is carried out here. It is not suitable for discussing the related issues of Swoft. It is recommended that the relevant issues be discussed in the related warehouses, chat rooms or major technical communities in Sofft so as to get more help and more people. discussion.
