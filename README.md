@@ -23,17 +23,17 @@ $ hugo server
 
 This site uses [netlify](https://netlify.com) to automate continuous integration of the `master` branch.
 
-## How to participate in the contribution
+## 如何参与贡献
 
-Currently the website is in development and everyone is welcome:
+目前该网站正在开发中，欢迎大家：
 
-* Participate in website style development
-* Participate in the preparation of document content
-* Fix typos or wrong writing format
-* Issue issue Discussion translation or writing format
-* Issue an issue to discuss related suggestions or questions
-* Participate in the translation of English documents.
+* 参与网站样式开发
+* 参与文件内容的准备
+* 修正错别字或错误的书写格式
+* 发行问题讨论翻译或写作格式
+* 发布问题以讨论相关建议或问题
+* 参与英语文件的翻译。
 
-note:
+注意：
 
-In principle, only the construction of the official website of the document is carried out here. It is not suitable for discussing the related issues of Swoft. It is recommended that the relevant issues be discussed in the related warehouses, chat rooms or major technical communities in Sofft so as to get more help and more people. discussion.
+原则上，仅在此处构建文档的官方网站。它不适合讨论 Swoft 的相关问题。建议在 Soft 的相关仓库，聊天室或主要技术社区中讨论相关问题，以便获得更多帮助和更多人。讨论。
