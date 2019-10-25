@@ -1,5 +1,5 @@
 +++
-title = "PHP Storm"
+title = "PhpStorm"
 toc = true
 type = "docs"
 draft = false
