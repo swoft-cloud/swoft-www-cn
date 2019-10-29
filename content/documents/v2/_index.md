@@ -19,7 +19,7 @@ type = "docs"  # 不要修改.
 +++
 [![Latest Stable Version](http://img.shields.io/packagist/v/swoft/swoft.svg)](https://packagist.org/packages/swoft/swoft)
 [![Build Status](https://travis-ci.org/swoft-cloud/swoft.svg?branch=master)](https://travis-ci.org/swoft-cloud/swoft)
-[![Docker Build Status](https://img.shields.io/docker/build/swoft/swoft.svg)](https://hub.docker.com/r/swoft/swoft/)
+[![Docker Build Status](https://img.shields.io/docker/build/swoft/alphp.svg)](https://hub.docker.com/r/swoft/swoft/)
 [![Php Version](https://img.shields.io/badge/php-%3E=7.1-brightgreen.svg?maxAge=2592000)](https://secure.php.net/)
 [![Swoole Version](https://img.shields.io/badge/swoole-%3E=4.4.1-brightgreen.svg?maxAge=2592000)](https://github.com/swoole/swoole-src)
 [![Swoft Doc](https://img.shields.io/badge/docs-passing-green.svg?maxAge=2592000)](https://www.swoft.org/docs)
@@ -72,9 +72,9 @@ Swoft 是首个基于 Swoole 原生协程的新时代 PHP 高性能协程全栈�
 
 Swoft 是基于 Swoole 的企业级 PHP 应用程序开发框架，大量开发人员使用 Swoft Framework 来创建高性能、易于测试和可重用的代码。
 
-Swoft 开源框架自 2018 年 3 月 6 日发布以来，我们秉承简单、高效、稳定的宗旨持续迭代升级。伴随着 `1.x` 的开发迭代和 Swoole 4 全协程化，`1.x` 的底层架构已经不再合适，所以在 2018 年 11 月开始规划 `2.x`。新版本底层借鉴 `1.x` 的经验全部重写，采用 Swoole Hook 方式，框架全部协程化，框架整体相比 `1.x` 更易上手，稳定性也更高。
+Swoft 开源框架自 2018 年 3 月 6 日发布以来，我们秉承简单、高效、稳定的宗旨持续迭代升级。伴随着 `1.x` 的开发迭代和 Swoole 4 全协程化，`1.x` 的底层架构已经不再合适，所以在 2018 年 11 月开始规划 `2.x`。新版本底层借鉴 `1.x` 的经验全部重写，采用 Swoole Hook 全协程化，整体相比 `1.x` 更易上手，稳定性也更高。
 
-Swoft 是一款轻量级的框架，所有组件均可以自定义且支持按需使用。
+Swoft 是一款轻量级的框架，所有组件均可以自定义且支持按需加载使用。
 
 Swoft 框架可用于开发任何 Web 应用程序，构建高性能的 Web 系统、API、中间件、基础服务等。
 
