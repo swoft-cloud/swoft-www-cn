@@ -4,7 +4,7 @@ toc = true
 type = "docs"
 draft = false
 date = "2018-09-19"
-lastmod = "2018-09-20"
+lastmod = "2019-10-29"
 weight = 503
 
 [menu.v2]
@@ -162,23 +162,392 @@ AOP 的主要作用是在不侵入原有代码的情况下添加新的功能。
 
   将切面应用至目标对象以创建新代理对象的过程。
 
-## 运用
+## 运用声明
 
 ### 声明切面
 
-### 声明切入点
+通过注解 `@Aspect` 将类定义为切面类：
+
+```php
+<?php declare(strict_types=1);
+
+use Swoft\Aop\Annotation\Mapping\Aspect;
+
+/**
+ * @Aspect(order=1)
+ */
+class DemoAspect
+{
+    // TODO: ...
+}
+```
+
+- `order`：用于指定优先级，数字越小则优先执行。
+
+### 声明切点
+
+> 目标类必须指定为携带 `namespace` 的完整路径或如示例代码中在顶部 `use`。
+
+示例代码：
+
+```php
+<?php declare(strict_types=1);
+
+namespace App\Aspect;
+
+use App\Services\OrderService;
+use App\Services\UserService;
+use Swoft\Aop\Annotation\Mapping\Aspect;
+use Swoft\Aop\Annotation\Mapping\PointAnnotation;
+use Swoft\Aop\Annotation\Mapping\PointBean;
+use Swoft\Aop\Annotation\Mapping\PointExecution;
+use Swoft\Http\Server\Annotation\Mapping\RequestMapping;
+
+/**
+ * @Aspect(order=1)
+ *
+ * @PointBean(
+ *     include={OrderService::class,UserService::class},
+ *     exclude={}
+ * )
+ *
+ * @PointAnnotation(
+ *     include={RequestMapping::class},
+ *     exclude={}
+ * )
+ *
+ * @PointExecution(
+ *     include={OrderService::createOrder,UserService::getUserBalance},
+ *     exclude={OrderService::generateOrder}
+ * )
+ */
+class DemoAspect
+{
+    // TODO: ...
+}
+
+```
+- PointBean：定义目标类切点
+  - `include`：需被 **指定** 为切点的目标类集合
+  - `exclude`：需被 **排除** 为切点的目标类集合
+- PointAnnotation：定义 **注解类** 切点，所有使用对应注解的方法均会通过该切面类代理
+  - `inlucde`：需被 **织入** 的注解类集合
+  - `exclude`：需被 **排除** 的注解类集合
+- PointExecution：定义确切的目标类方法。
+  - `include`：需被 **织入** 的目标类方法集合，支持正则表达式
+  - `exclude`：需被 **排除** 的目标类方法集合，支持正则表达式
+
+> 使用正则表达式时，参数内容 **必须** 使用双引号 `" "` 包裹；命名空间分隔符 **必须** 使用 `\` 转义，同时双引号内 **必须** 是类的完整路径。 
+>
+> 以上注解定义的关系为并集，定义的排除为并集后的结果。建议为了便于理解和使用，一个切面类尽量只使用其中一个注解。 
 
 ### 声明通知
 
-### 编写切面类
+```php
+<?php declare(strict_types=1);
 
-### 编写测试类
+namespace App\Aspect;
 
-## 执行顺序
+use App\Services\OrderService;
+use App\Services\UserService;
+use Swoft\Aop\Annotation\Mapping\After;
+use Swoft\Aop\Annotation\Mapping\AfterReturning;
+use Swoft\Aop\Annotation\Mapping\AfterThrowing;
+use Swoft\Aop\Annotation\Mapping\Around;
+use Swoft\Aop\Annotation\Mapping\Aspect;
+use Swoft\Aop\Annotation\Mapping\Before;
+use Swoft\Aop\Annotation\Mapping\PointExecution;
+use Swoft\Aop\Point\JoinPoint;
+use Swoft\Aop\Point\ProceedingJoinPoint;
+use Throwable;
+
+/**
+ * @Aspect(order=1)
+ *
+ * @PointExecution(
+ *     include={OrderService::createOrder,UserService::getUserBalance},
+ *     exclude={OrderService::generateOrder}
+ * )
+ */
+class DemoAspect
+{
+
+    /**
+     * 前置通知
+     *
+     * @Before()
+     */
+    public function beforeAdvice()
+    {
+
+    }
+
+    /**
+     * 后置通知
+     *
+     * @After()
+     */
+    public function afterAdvice()
+    {
+
+    }
+
+    /**
+     * 返回通知
+     *
+     * @AfterReturning()
+     *
+     * @param JoinPoint $joinPoint
+     *
+     * @return mixed
+     */
+    public function afterReturnAdvice(JoinPoint $joinPoint)
+    {
+        $ret = $joinPoint->getReturn();
+        // 返回
+        return $ret;
+    }
+
+    /**
+     * 异常通知
+     *
+     * @AfterThrowing()
+     *
+     * @param Throwable $throwable
+     */
+    public function afterThrowingAdvice(Throwable $throwable)
+    {
+
+    }
+
+    /**
+     * 环绕通知
+     *
+     * @Around()
+     *
+     * @param ProceedingJoinPoint $proceedingJoinPoint
+     *
+     * @return mixed
+     * @throws Throwable
+     */
+    public function aroundAdvice(ProceedingJoinPoint $proceedingJoinPoint)
+    {
+        // 前置通知
+        $ret = $proceedingJoinPoint->proceed();
+        // 后置通知
+        return $ret;
+    }
+}
+```
+
+- `@Before`：前置通知。在目标方法之前执行
+- `@After`：后置通知。在目标方法之后执行
+- `@AfterReturing`：返回通知
+- `@AfterThrowing`：异常通知。目标方法异常时执行
+- `@Around`：环绕通知。等同于前置通知加上后置通知，在目标方法之前及之后执行
+
+## 业务示例
+
+为了更好的理解，我们使用前置、后置通知实现一个用于计算代码执行时长的例子。
+
+### 控制器
+
+在控制器中测试更为直观：
+
+```php
+<?php declare(strict_types=1);
+
+namespace App\Http\Controller;
+
+use Swoft\Http\Server\Annotation\Mapping\Controller;
+use Swoft\Http\Server\Annotation\Mapping\RequestMapping;
+
+/**
+ * @Controller(prefix="test")
+ */
+class TestRunTimeController
+{
+
+    /**
+     * 闭包递归，计算阶乘
+     *
+     * @RequestMapping(route="factorial/{number}")
+     *
+     * @param int $number
+     *
+     * @return array
+     */
+    public function factorial(int $number): array
+    {
+        $factorial = function ($arg) use (&$factorial) {
+            if ($arg == 1) {
+                return $arg;
+            }
+            return $arg * $factorial($arg - 1);
+        };
+        return [$factorial($number)];
+    }
+
+    /**
+     * 计算 1-1000 和，最后休眠 1s
+     *
+     * @RequestMapping(route="sum")
+     */
+    public function sumAndSleep(): array
+    {
+        $sum = 0;
+        for ($i = 1; $i <= 1000; $i++) {
+            $sum = $sum + $i;
+        }
+        sleep(1);
+        return [$sum];
+    }
+}
+```
+
+启动 HTTP 服务后，我们可以通过访问下方两个地址执行代码：
+
+
+
+1. [http://localhost:18306/test/factorial/100](http://localhost:18306/test/factorial/100)
+2. [http://localhost:18306/test/sum](http://localhost:18306/test/sum)
+
+### 切面类
+
+前文已强调，通过 AOP 我们可以在不侵入原有代码的情况下实现额外的操作。请看示例：
+
+```php
+<?php declare(strict_types=1);
+
+namespace App\Aspect;
+
+use App\Http\Controller\TestRunTimeController;
+use Swoft\Aop\Annotation\Mapping\After;
+use Swoft\Aop\Annotation\Mapping\Aspect;
+use Swoft\Aop\Annotation\Mapping\Before;
+use Swoft\Aop\Annotation\Mapping\PointBean;
+use Swoft\Aop\Point\JoinPoint;
+
+/**
+ * @Aspect(order=1)
+ *
+ * @PointBean(include={TestRunTimeController::class})
+ */
+class CalculateRunTimeAspect {
+
+    /** @var float 执行开始 */
+    private $time_begin;
+
+    /**
+     * 前置通知
+     *
+     * @Before()
+     */
+    public function beforeAdvice()
+    {
+        // 起点时间
+        $this->time_begin = microtime(true);
+    }
+
+    /**
+     * 后置通知
+     *
+     * @After()
+     *
+     * @param JoinPoint $joinPoint
+     */
+    public function afterAdvice(JoinPoint $joinPoint)
+    {
+        /** @var float 执行结束 */
+        $timeFinish = microtime(true);
+        $method = $joinPoint->getMethod();
+        $runtime = round(($timeFinish - $this->time_begin) * 1000, 3);
+        echo "{$method} 方法，本次执行时间为: {$runtime}ms \n";
+    }
+}
+```
+
+编写完成后重启 HTTP 服务，然后再次访问：
+
+
+
+1. [http://localhost:18306/test/factorial/100](http://localhost:18306/test/factorial/100)
+2. [http://localhost:18306/test/sum](http://localhost:18306/test/sum)
+
+得到结果后返回控制台查看执行时间：
+
+```bash
+factorial 方法，本次执行时间为: 0.107ms
+sumAndSleep 方法，本次执行时间为: 1000.319ms
+```
+
+## 通知执行顺序
+
+前文已提到，多个切面按照 `order` 属性值进行优先级划分，数字越小优先执行。而在一个切面中的多个通知同样也按照顺序执行。
 
 ### 单切面
 
+- 正常顺序
+
+    ![Singular Aspect Normal](/img/singular-aspect-normal.jpg)
+
+    1. `@Around` 环绕通知 **前** 置部分
+    2. `@Before` 前置通知
+    3. 目标对象方法
+    4. `@Around` 环绕通知 **后** 置部分
+    5. `@After` 后置通知
+    6. `@AfterReturn` 返回通知
+
+- 异常顺序
+
+    ![Singular Aspect Exception](/img/singular-aspect-exception.jpg)
+  
+    1. `@Around` 环绕通知 **前** 置部分
+    2. `@Before` 前置通知
+    3. 目标对象方法
+    4. `@Around` 环绕通知 **后** 置部分
+    5. `@After` 后置通知
+    6. `@AfterThrowing` 异常通知
+
 ### 多切面
+
+![Multiple Aspects](/img/multiple-aspects.jpg)
+
+以正常情况为例：
+
+1. 切面 1 `@Around` 环绕通知 **前** 置部分
+2. 切面 1 `@Before` 前置通知
+3. 切面 2 `@Around` 环绕通知 **前** 置部分
+4. 切面 2 `@Before` 前置通知
+5. 目标对象方法
+6. 切面 2 `@Around` 环绕通知 **后** 置部分
+7. 切面 2 `@After` 后置通知
+8. 切面 2 `@AfterReturn` 返回通知
+9. 切面 1 `@Around` 环绕通知 **后** 置通知
+10. 切面 1 `@After` 后置通知
+11. 切面 1 `@AfterReturn` 返回通知
 
 ## 注意事项
 
+AOP 仅拦截 `public` 及 `protected` 修饰的方法，不会拦截 `private` 方法。
+
+此外，在 Swoft AOP 中，如果某个方法内调用了另一个 **被织入** 的方法时，AOP 也会向该方法织入通知。例如我们定义了一个类 `A`，它有两个 `public` 方法 `func1` 和 `func2`，然后我们定义一个切面，使用 `@PointBean(include={A::class})` 注解将 `A` 类（所有方法）进行织入，示例代码：
+
+```php
+<?php
+class A
+{
+    function func1()
+    {
+        echo "func1 \n";
+    }
+
+    function func2()
+    {
+        $this->func1();
+        echo "func2 \n";
+    }
+}
+```
+
+ 当我们执行 `func2` 时，我们的切面会被执行 **两次**，两次执行的顺序相同。切面会先对 `func2` 织入通知，其次对 `func1` 织入通知。
