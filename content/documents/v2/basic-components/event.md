@@ -82,8 +82,6 @@ swoft.udp.after
 
 > 在事件到达监听器前停止本次事件的传播 `$event->stopPropagation(true)` 时，后面的监听器将不会收到该事情。
 
-https://github.com/inhere/php-event-manager/blob/master/README.md)
-
 ## 如何使用
 
 ### 监听器
@@ -341,7 +339,7 @@ class MasterStartListener implements EventHandlerInterface
 
 ## 自定义事件
 
-更多自定义事件介绍参考：[https://github.com/inhere/php-event-manager/blob/master/README.md](
+更多自定义事件介绍参考：[https://github.com/inhere/php-event-manager/blob/master/README.md](https://github.com/inhere/php-event-manager/blob/master/README.md)
 
 ## 参与贡献
 
