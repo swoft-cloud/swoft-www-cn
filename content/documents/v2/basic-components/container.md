@@ -28,7 +28,7 @@ DI 为依赖注入（Dependency Injection）的缩写，DI 其实也不是一门
 
 我们知道一台标准的电脑拥有 USB 接口，通过 USB 接口可以扩展电脑功能，如：键盘、鼠标、U 盘、蓝牙、无线网卡等等。只要是拥有标准 USB 接口的设备，连接到电脑上就能使用。现在我们有一台没有 USB 接口的电脑，我们也拥有键盘、鼠标和 U 盘（均为标准 USB 接口设备），当我们需要使用键鼠、U 盘的功能时，就必须 **依赖** USB 接口来实现我们的目标。
 
-![Computer](/img/computer.png)
+ {{< figure library="true" src="computer.png" numbered="false" lightbox="true">}} 
 
 > 这里的 USB 接口指传统 USB 接口，即 USB-A 接口。
 
@@ -145,7 +145,7 @@ $computer->useUDisk();
 
 可是即便是当年强大的神机也会面临岁月的折磨，我们的 USB 接口在某天变得老化，速度颇慢，跟不上时代的步伐，更不兼容最新的 **Type-C** 接口，于是我们准备更换到新一代的 USB-C（Type-C）：
 
-![Upgrade](/img/upgrade.png)
+ {{< figure library="true" src="upgrade.png" numbered="false" lightbox="true">}} 
 
 但是，USB 接口的更换等同于更换主板（忽略处理器、内存等接口版本差异），拆机、装机、插跳线、配置 BIOS 等工作极其麻烦，我们是否可以将这个工作交给 **别人** 来完成，从而我们当一个电脑的使用者就好？将这个复杂的工作、控制权交给所谓的“别人”替我们完成的思想就叫做 **控制反转**。
 

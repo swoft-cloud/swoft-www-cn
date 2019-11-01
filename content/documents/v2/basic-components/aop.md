@@ -120,11 +120,11 @@ AOP 的主要作用是在不侵入原有代码的情况下添加新的功能。
 
 请看图示：
 
-![OOP](/img/OOP.png)
+{{< figure library="true" src="OOP.png" numbered="false" lightbox="true">}}
 
 如上图所示，我们有两个类：**订单类** 和 **用户类**，我们对其相关功能做了封装。但是，权限检查、日志记录等功能就是在重复的编码，而利用 AOP 思想就可以将这些功能 **横向切** 出去，然后在适当的时候再将这些功能织入进来：
 
-![AOP](/img/AOP.png)
+{{< figure library="true" src="AOP.png" numbered="false" lightbox="true">}}
 
 这就是 AOP。
 
@@ -489,7 +489,7 @@ sumAndSleep 方法，本次执行时间为: 1000.319ms
 
 - 正常顺序
 
-    ![Singular Aspect Normal](/img/singular-aspect-normal.jpg)
+    {{< figure library="true" src="singular-aspect-normal.jpg" numbered="false" lightbox="true">}}
 
     1. `@Around` 环绕通知 **前** 置部分
     2. `@Before` 前置通知
@@ -500,7 +500,7 @@ sumAndSleep 方法，本次执行时间为: 1000.319ms
 
 - 异常顺序
 
-    ![Singular Aspect Exception](/img/singular-aspect-exception.jpg)
+    {{< figure library="true" src="singular-aspect-exception.jpg" numbered="false" lightbox="true">}}
   
     1. `@Around` 环绕通知 **前** 置部分
     2. `@Before` 前置通知
@@ -511,7 +511,7 @@ sumAndSleep 方法，本次执行时间为: 1000.319ms
 
 ### 多切面
 
-![Multiple Aspects](/img/multiple-aspects.jpg)
+{{< figure library="true" src="multiple-aspects.jpg" numbered="false" lightbox="true">}}
 
 以正常情况为例：
 
