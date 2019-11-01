@@ -187,7 +187,7 @@ class ServeCommand
 
 完成定义命令后，可以执行命令，处理对应业务逻辑
 
-* 现在你可以执行 `php bin/swoft`, 命令列表中将会显示 serve 组命令
+* 现在你可以执行 `php bin/swoft`, 命令列表中将会显示 `serve` 组命令
 * 执行 `php bin/swoft serve` 或者 `php bin/swoft serve -h` 将会看到 serve组里拥有的具体命令
 * 执行 `php bin/swoft serve:run -h` 将会看到此命令的完整帮助信息
 
@@ -197,12 +197,22 @@ class ServeCommand
 `command` 里是始终不可能直接操作 `server`，你每运行一次 `command`，都是在一个全新的进程里，除了使用一样的代码，其他毫无关系。
 {{%/alert%}}
 
-运行 `命令组` 下面的，某个 `操作` 命令。
+运行 `serve` 下面的，某个 `run` 命令。
 
 ```bash
 # 运行 http 命令组中的 start 操作
-php bin/swoft http:start
+php bin/swoft serve:run
 ```
+
+### 更多命令
+
+|命令|说明|
+|:----|:----|
+|php bin/swoft [-h,--help]|查看当前已经定义的所有命令组|
+|php bin/swoft -v \|--version|查看当前 swoft 框架版本信息|
+|php bin/swoft `xxx` [-h,--help]|查看 `xxx` 命令组帮助信息|
+|php bin/swoft `xxx:yyy` -h \|--help|查看 `xxx` 命令组下的 `yyy` 操作的帮助信息|
+|php bin/swoft `xxx:yyy`|执行 `xxx` 命令组下的 `yyy` 操作|
 
 ## 输入输出对象
 
@@ -261,8 +271,299 @@ class TestCommand
 }
 ```
 
-### 使用示例
+### 使用输入输出对象
+
+通过前面 [定义命令](#定义命令) 这一部分的介绍，我们已经知道了命令参数，命令选项。
+
+现在，在终端中执行如下的命令，用于演示参数选项等信息的解析。
+
+```bash
+php bin/swoft demo:test status=2 name=john arg0 -s=test --page 23 --id=154 -e dev -v vvv -d -rf --debug --test=false
+```
+
+> **注意：** 输入如下的字符串将会认为是布尔值
+
+* `on|yes|true` = `true`
+* `off|no|false` = `false`
+
+#### 获取基本信息
+
+```php
+echo $input->getScriptFile();  // 'bin/swoft' 执行的入口脚本文件
+echo $input->getCommand(); // 'demo:test' 命令名称 解析到的第一个参数将会被认为是命令名称，并且不会再存入到 参数列表中
+echo $input->getPwd(); // 当前工作目录
+```
+
+#### 命令参数信息
+
+> 通常的参数如 `arg0` 只能根据 `index key` 来获取值。但是提供以等号(`=`)连接的方式来指定参数名(eg: `status=2`)
+
+打印所有的参数信息
+
+```php
+var_dump($input->getArgs());
+```
+
+输出
+
+```php
+array(3) {
+  'status' => string(1) "2"
+  'name' => string(4) "john"
+  [0] => string(4) "arg0"
+}
+```
+
+#### 获取命令参数值
+
+```php
+// argument
+$first = $input->getFirstArg(); // 'arg0'
+$status = $input->getArg('status', 'default value'); // '2'
+$status = $input->getInt('status'); // 2
+// 获取一个必须的参数，若用户没有输入值，将会抛出错误信息
+$id = $input->getRequiredArg('id');
+```
+
+#### 命令选项信息
+
+获取解析后的选项信息
+
+* 没有值的选项，将设置默认值为 `bool(true)`
+* 短选项不仅仅只是以一个 - 开头，而且名称 只能是一个字符
+* 多个(默认值的)短选项可以合并到一起写。如 `-rf` 会被解析为两个短选项 `'r' => bool(true) 'f' => bool(true)`
+
+示例
+
+```php
+var_dump($input->getOpts());
+// var_dump($input->getLOpts()); // 只打印长选项信息
+// var_dump($input->getSOpts()); // 只打印短选项信息
+```
+
+输出
+
+```php
+array(10) {
+  's' => string(4) "test"
+  'e' => string(3) "dev"
+  'v' => string(3) "vvv"
+  'd' => bool(true)
+  'r' => bool(true)
+  'f' => bool(true)
+  'page' => string(2) "23"
+  'id' =>   string(3) "154"
+  'debug' => bool(true)
+  'test' => bool(false)
+}
+```
+
+#### 获取选项值
+
+输入对象中提供了非常多的选项值获取方法，方便快速的获取需要的信息。
+
+```php
+// option
+$page = $input->getOpt('page') // '23'
+$page = $input->getIntOpt('page') // 23
+$debug = $input->getBoolOpt('debug') // True
+$test = $input->getBoolOpt('test') // False
+
+$d = $input->getBoolOpt('d') // True
+// 获取到一个值就返回，对同一个含义的选项选项非常有用
+$showHelp = $input->sameOpt(['h','help']);
+// 获取一个必须的选项，若用户没有输入值，将会抛出错误信息
+$id = $input->getRequiredOpt('id');
+```
+
+#### 读取用户输入
+
+```php
+echo "Your name:";
+$name = $input->read();
+echo 'input is ' . $name; // 'inhere'
+```
+
+效果(in terminal)：
+
+```bash
+Your name: inhere
+input is inhere
+```
 
 ## 数据展示
 
 Console 数据展示 - 提供格式化信息的输出显示。
+
+主要功能封装在命名空间 `Swoft\Console\Advanced\Formatter` 下，提供了 `Swoft\Console\Helper\Show` 辅助类来快速使用它们。
+
+### 标题文本输出
+
+使用 `Show::title()/$output->title()`
+
+```php
+public static function title(string $title, array $opts = [])
+```
+
+### 段落式文本输出
+
+使用 `Show::section()/$output->section()`
+
+```php
+public static function section(string $title, string|array $body, array $opts = [])
+```
+
+### 列表数据展示输出
+
+```php
+public static function aList(array $data, string $title, array $opts = [])
+```
+
+* `$data array` 列表数据。可以是 `key-value` 形式，也可以只有 `value`，还可以两种混合。
+* `$title string` 列表标题。可选的
+* `$opts array` 选项设置(**同表格、面板的选项**)
+  * `leftChar` 左侧边框字符。默认两个空格，也可以是其他字符(eg: `* .`)
+  * `keyStyle` 当 `key-value` 形式时，渲染 `key` 的颜色风格。 默认 `info`, 设为空即是不加颜色渲染
+  * `titleStyle` 标题的颜色风格。 默认 `comment`
+
+> `aList` 的默认选项，可以渲染一个命令的帮助信息。
+
+使用 `Show::aList()/$output->aList()`
+
+```php
+$title = 'list title';
+$data = [
+     'name'  => 'value text', // key-value
+     'name2' => 'value text 2',
+     'more info please XXX', // only value
+];
+Show::aList($data, $title);
+```
+
+渲染效果
+
+{{< figure library="true" src="fmt-list.png" numbered="false" lightbox="true">}}
+
+### 多列表数据展示输出
+
+```php
+public static function mList(array $data, array $opts = [])
+```
+
+> `mList` 的默认选项，可以渲染一组命令的帮助信息。效果与 `helpPanel()` 相同，并且自定义性更高。
+
+使用 `Show::mList()/$output->mList()` 别名方法 `Show::multiList()`
+
+```php
+$data = [
+  'list1 title' => [
+     'name' => 'value text',
+     'name2' => 'value text 2',
+  ],
+  'list2 title' => [
+     'name' => 'value text',
+     'name2' => 'value text 2',
+  ],
+  // ... ...
+];
+
+Show::mList($data);
+```
+
+渲染效果
+
+{{< figure library="true" src="fmt-multi-list.png" numbered="false" lightbox="true">}}
+
+### 面板展示信息输出
+
+```php
+public static function panel(mixed $data, string $title = 'Information Panel', array $opts = [])
+```
+
+展示信息面板。比如 命令行应用 开始运行时需要显示一些 版本信息，环境信息等等。
+
+使用 `Show::panel()/$output->panel()`
+
+```php
+$data = [
+    'application version' => '1.2.0',
+    'system version' => '5.2.3',
+    'see help' => 'please use php bin/app -h',
+    'a only value message',
+];
+Show::panel($data, 'panel show', ['borderChar' => '#']);
+```
+
+渲染效果
+
+{{< figure library="true" src="fmt-panel.png" numbered="false" lightbox="true">}}
+
+### 数据表格信息输出
+
+```php
+public static function table(array $data, $title = 'Data Table', array $opts = [])
+```
+
+使用 `Show::table()/$output->table()` 可直接渲染从数据库拉取的数据(会自动提取字段名作为表头)
+
+```php
+// like from database query's data.
+$data = [
+ [ col1 => value1, col2 => value2, col3 => value3, ... ], // first row
+ [ col1 => value4, col2 => value5, col3 => value6, ... ], // second row
+ ... ...
+];
+
+Show::table($data, 'a table');
+```
+
+自己构造数据时，还要写字段名就有些麻烦了。可以通过选项配置 `$opts` 手动配置表头字段列表
+
+```php
+// use custom head
+$data = [
+ [ value1, value2, value3, ... ], // first row
+ [ value4, value5, value6, ... ], // second row
+ // ... ...
+];
+
+$opts = [
+  'showBorder' => true,
+  'columns' => [col1, col2, col3, ...]
+];
+Show::table($data, 'a table', $opts);
+```
+
+渲染效果
+
+{{< figure library="true" src="table-show.png" numbered="false" lightbox="true">}}
+
+### 渲染帮助信息面板
+
+```php
+public static function helpPanel(array $config, $showAfterQuit = true)
+```
+
+使用 `Show::helpPanel()/$output->helpPanel()`
+
+```php
+Show::helpPanel([
+    "description" => 'a help panel description text. (help panel show)',
+    "usage" => 'a usage text',
+    "arguments" => [
+        'arg1' => 'arg1 description',
+        'arg2' => 'arg2 description',
+    ],
+    "options" => [
+        '--opt1' => 'a long option',
+        '-s' => 'a short option',
+        '-d' => 'Run the server on daemon.(default: <comment>false</comment>)',
+        '-h, --help' => 'Display this help message'
+    ],
+], false);
+```
+
+渲染效果
+
+{{< figure library="true" src="fmt-help-panel.png" numbered="false" lightbox="true">}}
+

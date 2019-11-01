@@ -91,6 +91,8 @@ Swoft 框架可以用于开发任何 Web 应用程序，构建高性能的 Web �
 
 Swoft 官方1群：548173319
 
+Swoft 官方2群：778656850
+
 Swoft 社区：[https://learnku.com/swoft](https://learnku.com/swoft)
 
 ## 支持
