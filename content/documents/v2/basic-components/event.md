@@ -24,7 +24,7 @@ GitHub: [https://github.com/swoft-cloud/swoft-event](https://github.com/swoft-cl
 
 ## 安装
 
-默认情况下事件组件已包含在 Swoft 框架中，如需重新安装只需执行下方命令： 
+默认情况下事件组件已包含在 Swoft 框架中，如需单独安装只需执行下方命令： 
 
 ```bash
 composer require swoft/event
