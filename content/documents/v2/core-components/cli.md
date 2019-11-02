@@ -15,9 +15,15 @@ swoft 提供了功能强大的命令行应用处理功能，swoft 的 `http serv
 
 ## 安装
 
+### Composer 安装
+
 ```bash
 composer require swoft/console
 ```
+
+### Git 仓库
+
+* Github [https://github.com/swoft-cloud/swoft-console](https://github.com/swoft-cloud/swoft-console)
 
 ## 功能特性
 
