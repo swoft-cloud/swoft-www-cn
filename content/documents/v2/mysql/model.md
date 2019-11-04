@@ -298,10 +298,128 @@ php ./bin/swoft entity:create -h
 
 - `incrementing`：是否为递增主键，默认为 `true`
 
-## 如何使用
+## Prop 操作
 
-如何使用
+> Swoft 版本需 `>= 2.0.6`
 
-## 使用示例
+模型支持使用 `prop` 直接操作，在上方示例实体类中，数据表字段 `user_desc` 的 prop 为 `udesc`，Swoft 底层会自动转换，所以并不响应我们使用。
 
-使用示例
+新增数据示例：
+
+```php
+User::new([
+    'udesc' => $descString,
+])->save();
+```
+
+查询条件示例：
+
+```php
+$where = [
+    'pwd' => md5(uniqid()),
+    ['udesc', 'LIKE', 'swoft%'],
+    ['whereIn', 'id', [1, 2, 3]]
+];
+
+// SELECT * FROM `user` WHERE (`password` = ? AND `user_desc` LIKE ? AND `id` IN (?))';
+$sql = User::whereProp($where)->toSql();
+```
+
+> 在条件中使用需通过 `whereProp` 方法连接，`whereProp` 与 `where` 用法相同。
+
+## 新增数据
+
+### 对象方式
+
+```php
+$user = User::new();
+
+$user->setName('Swoft');
+$user->setPwd('123456');
+$user->setAge(2);
+$user->setUserDesc('Great Framework');
+
+$user->save();
+// 保存之后获取 ID
+$userId = $user->getId();
+```
+
+### 数组方式
+
+```php
+$attributes = [
+    'name'      => 'Swoft',
+    'pwd'       => '123456',
+    'age'       => 2,
+    'user_desc' => 'Great Framework'
+];
+
+$user = User::new($attributes);
+
+$user->save();
+
+$userId = $user->getId();
+```
+
+### 批量新增
+
+批量新增数据可以直接使用 `User::insert($array)` 方法，该方法与查询构造器方法一致。
+
+## 删除数据
+
+### ID 方式
+
+```php
+$user = User::find($id);
+
+$user->delete();
+```
+
+### 条件删除
+
+```php
+User::where('id', 1)->delete();
+```
+
+## 数据更新
+
+### setter 方式
+
+```php
+$user = User::find($id);
+
+$user->setAge(2);
+$user->save();
+```
+
+### update 方式
+
+```php
+User::find($id)->update(['age' => 2]);
+```
+
+### 批量更新
+
+```php
+User::where([
+    'name' => 'Swoft',
+    ['age', '>=', 1]
+])->limit(2)->update(['user_desc' => 'Very nice']);
+```
+
+### 更新/新增
+
+可使用 `updateOrCreate` 方法实现目标数据不存在时新增数据，方法返回数据实体。
+
+```php
+$user = User::updateOrCreate(['id' => 1], ['age' => 18, 'name' => 'Swoft Framework']);
+
+echo $user->getName();
+```
+
+也可以使用 `updateOrInsert` 方法，该方法返回值为 `bool` 类型。
+
+```php
+User::updateOrInsert(['id' => 1], ['age' => 18, 'name' => 'Swoft Framework']);
+```
+
