@@ -365,6 +365,34 @@ $userId = $user->getId();
 
 批量新增数据可以直接使用 `User::insert($array)` 方法，该方法与查询构造器方法一致。
 
+### 其它方式
+
+你还可以使用 `firstOrCreate` 和 `firstOrNew` 方法来新增数据。`firstOrCreate` 方法会使用给定的字段及其值在数据库中查找记录，如果在数据库中找不到该模型，则会使用第一个参数中的属性以及可选的第二个参数中的属性新增数据。
+
+`firstOrNew` 方法类似 `firstOrCreate` 方法。它会在数据库中查找匹配给定属性的记录，如果模型未被找到则会返回一个新的模型实例。请注意，在这里面 `firstOrnew` 返回的模型还尚未保存到数据库，必须调用 `save` 方法才能写入到数据库中。
+
+以下为示例，通过 `name` 属性检索航班：
+
+```php
+// 当结果不存在时创建
+$flight = Flight::firstOrCreate(['name' => 'Flight 10']);
+
+// 当结果不存在的时候用 name 属性和 delayed 属性创建
+$flight = Flight::firstOrCreate(
+    ['name' => 'Flight 10'],
+    ['delayed' => 1]
+);
+
+// 当结果不存在时实例化...
+$flight = Flight::firstOrNew(['name' => 'Flight 10']);
+
+// 当结果不存在的时候用 name 属性和 delayed 属性实例化
+$flight = Flight::firstOrNew(
+    ['name' => 'Flight 10'],
+    ['delayed' => 1]
+);
+```
+
 ## 删除数据
 
 ### ID 方式
@@ -392,6 +420,25 @@ $user->setAge(2);
 $user->save();
 ```
 
+### 填充方式
+
+```php
+$attributes = [
+    'name'      => 'Swoft',
+    'pwd'       => '123456',
+    'age'       => 2,
+    'user_desc' => 'Come on'
+];
+
+// 方式一
+User::new($attributes)->save();
+
+// 方式二
+User::new()->fill($attributes)->save();
+```
+
+> 注意：如果该字段 **没有匹配** 到 `@Column` 标签时将会被忽略，这样能保证安全的更新和插入。
+
 ### update 方式
 
 ```php
@@ -405,6 +452,36 @@ User::where([
     'name' => 'Swoft',
     ['age', '>=', 1]
 ])->limit(2)->update(['user_desc' => 'Very nice']);
+```
+
+### 主键批量更新
+
+```php
+$values = [
+    ['id' => 1, 'age' => 18],
+    ['id' => 2, 'age' => 19],
+];
+
+User::batchUpdateByIds($values);
+```
+
+> 使用批量更新必须指定主键值，框架会根据主键值进行批量更新。在此例中， `id` 是 `User` 实体的  `@Id()` 主键。
+
+### 快速更新
+
+除 [update 方式](#update 方式) 示例代码中通过 `find($id)` 获取对象实体后 `update` 的方式外，还可以使用 `modifyById` 的方式进行快速更新。
+
+```php
+$row = User::modifyById($id, ['age' => 2]);
+```
+
+除 [批量更新](#批量更新) 示例代码中通过 `where` 条件查询后 `update` 的方式外，还可以使用 `modify` 的方式进行快速更新。
+
+```php
+$where = ['name' => 'Swoft'];
+$values = ['user_desc' => 'I love Swoft'];
+
+User::modify($where, $values);
 ```
 
 ### 更新/新增
@@ -421,5 +498,135 @@ echo $user->getName();
 
 ```php
 User::updateOrInsert(['id' => 1], ['age' => 18, 'name' => 'Swoft Framework']);
+```
+
+### 自增/自减
+
+单字段 **自增/自减**：
+
+```php
+User::find($id)->increment('age', 1);
+
+User::find($id)->increment('age', 1, ['name' => 'Swoft 2.0']);
+
+User::where('id', 1)->decrement('age', 1);
+```
+
+> 参数 `$extra` 为指定同步更新的数据。
+
+多字段 **自增/自减**：
+
+```php
+User::updateAllCounters(['name' => 'Swoft 2.0'], ['age' => -1]);
+
+User::updateAllCountersById((array)$id, ['age' => 1], ['name' => 'Swoft 2.0']);
+
+User::find($id)->updateCounters(['age' => -1, 'name' => 'Swoft 2.0']);
+```
+
+> 请谨慎使用条件更新，尽量使用主键更新以免造成锁表。
+
+## 查询数据
+
+模型的查询方法与查询构造器完全兼容。
+
+> 使用 `join` 进行查询操作时，不会返回对象实体。
+
+### 单行数据查询
+
+```php
+User::find(1, ['id', 'name']);
+
+User::where('id', 1)->first(['id', 'name']);
+```
+
+### 多行数据查询
+
+```php
+User::findMany([1, 2, 3, 4], ['id','name']);
+
+User::whereIn('id', [1, 2, 3, 4])->get(['id', 'name']);
+```
+
+### 对象实体查询
+
+```php
+$users = User::where('age', '>=', 18)->getModels(['id', 'age']);
+
+/* @var User $user */
+foreach ($users as $user) {
+    $age = $user->getAge();
+}
+```
+
+###  映射关系
+
+假设我们需要以某个字段作为 `key` 映射逻辑关系，我们可以通过 `keyBy` 方法实现。
+
+```php
+$users = User::forPage(1, 10)->get(['id', 'age'])->keyBy('id');
+
+/* @var User $user */
+foreach ($users as $id => $user) {
+    $age = $user->getAge();
+}
+```
+
+### 结果分块
+
+如需处理数千个 `Eloquent` 记录，可以使用 `chunk` 方法，`chunk` 方法会检索 `Eloquent` 模型的「**分块**」，然后将它们提供给指定的 `Closure` 进行处理。在处理大型结果集时，使用 `chunk` 方法可节省内存开销。
+
+```php
+Flight::chunk(200, function ($flights) {
+    foreach ($flights as $flight) {
+        // TODO:
+    }
+});
+```
+
+传递到方法的第一个参数都是希望每个「**分块**」接收的数据量。闭包作为第二个参数传递，它会在查询每个块时被调用。
+
+### Cursor（游标）
+
+`cursor` 用来遍历数据，游标只执行一次查询。在处理大量数据时，使用游标可以大幅度减少内存开销。
+
+```php
+foreach (Flight::where('foo', 'bar')->cursor() as $flight) {
+    // TODO:
+}
+```
+
+### 聚合函数
+
+模型支持 [查询构造器](https://www.swoft.org/docs/2.x/zh-CN/db/builder.html) 提供的 `count`、`sum`、`min`、`max` 等聚合函数。
+
+```php
+$count = Flight::where('active', 1)->count();
+
+$max = Flight::where('active', 1)->max('price');
+```
+
+### NotFound 异常
+
+如需在模型不存在时抛出异常，可以使用 `findOrFail` 或 `firstOrFail` 方法。该方法会检索查询的第一个结果，如果目标结果不存在，则会抛出一个 `DbException`。
+
+```php
+$model = Flight::findOrFail(1);
+
+$model = Flight::where('legs', '>', 100)->firstOrFail();
+```
+
+## 自动写时间戳
+
+默认情况下 `Eloquent` 会对数据表中 `created_at` 和 `updated_at` 两个字段进行自动写入。如果你不需要依赖 Swoft 自动更新这两个字段，只需在模型内将 `$modelTimestamps` 属性设置为 `false` 即可。
+
+```php
+class User
+{
+    /**
+     * @var bool
+     */
+    protected $modelTimestamps = false;
+}
 ```
 
