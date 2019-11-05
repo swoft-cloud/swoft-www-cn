@@ -15,9 +15,22 @@ swoft 提供了功能强大的命令行应用处理功能，swoft 的 `http serv
 
 ## 安装
 
+### Composer 安装
+
 ```bash
 composer require swoft/console
 ```
+
+### Git 仓库
+
+* Github [https://github.com/swoft-cloud/swoft-console](https://github.com/swoft-cloud/swoft-console)
+
+## 参与贡献
+
+欢迎参与贡献，您可以
+
+* fork 我们的开发仓库 [swoft/component](https://github.com/swoft-cloud/swoft-component)
+* 修改代码然后发起 PR
 
 ## 功能特性
 
@@ -110,14 +123,14 @@ php bin/swoft group:cmd john male 43 --opt1 value1 -y
 
 拥有属性：
 
-* `name` _string_ **必填项** 定义命令选项名称。eg: `opt`
-* `short` _string_ 定义命令选项名称的短选项。
+* `name` _string_ **必填项** 定义命令选项名称 eg: `opt`
+* `short` _string_ 定义命令选项名称的短选项
 * `default` _mixed_ 命令选项的默认值
 * `desc` _string_ 命令选项的描述信息说明，支持颜色标签
 * `type` _string_ 命令选项的值类型
-* `mode` _int_ 命令选项的值输入限定：必须，可选 等
+* `mode` _int_ 命令选项的值输入限定：`Command::OPT_BOOLEAN (int 1 可选)`，`Command::OPT_REQUIRED (int 2 必须)`
 
-> Tips: 特别的 `@CommandOption` 可以用 command 类注释上面，这样子相当于给里面所有的命令都加了公共选项。
+> Tips: 特别提示 `@CommandOption` 可以用在 `@Command` 类注解上面，这样子相当于给里面所有的命令都加了公共选项。
 
 ### @CommandArgument
 
@@ -129,7 +142,7 @@ php bin/swoft group:cmd john male 43 --opt1 value1 -y
 * `default` _mixed_ 命令参数的默认值
 * `desc` _string_ 命令参数的描述信息说明，支持颜色标签
 * `type` _string_ 命令参数的值类型
-* `mode` _int_ 命令参数的值输入限定：必须，可选 等
+* `mode` _int_ 命令选项的值输入限定：`Command::OPT_BOOLEAN (int 1 可选)`，`Command::OPT_REQUIRED (int 2 必须)`
 
 > Tips: 命令参数是根据输入位置(有顺序的)来获取的，`name` 是代码里给这个位置的参数添加的命名。
 
@@ -201,15 +214,19 @@ class ServeCommand
 
 ```bash
 # 运行 http 命令组中的 start 操作
-php bin/swoft serve:run
+php bin/swoft serve:run -h
 ```
+
+渲染效果
+
+{{< figure library="true" src="cli-run-example.png" numbered="false" lightbox="true">}}
 
 ### 更多命令
 
 |命令|说明|
 |:----|:----|
 |php bin/swoft [-h,--help]|查看当前已经定义的所有命令组|
-|php bin/swoft -v \|--version|查看当前 swoft 框架版本信息|
+|php bin/swoft -v \| --version|查看当前 swoft 框架版本信息|
 |php bin/swoft `xxx` [-h,--help]|查看 `xxx` 命令组帮助信息|
 |php bin/swoft `xxx:yyy` -h \|--help|查看 `xxx` 命令组下的 `yyy` 操作的帮助信息|
 |php bin/swoft `xxx:yyy`|执行 `xxx` 命令组下的 `yyy` 操作|
@@ -534,6 +551,30 @@ $opts = [
 Show::table($data, 'a table', $opts);
 ```
 
+示例
+
+```php
+$data = [
+    ['1', 'john', '2', 'john@email.com'],
+    ['2', 'tom', '0', 'tom@email.com'],
+    ['3', 'jack', '1', 'jack@email.com'],
+];
+$opts = [
+    'showBorder' => true,
+    'columns' => ['id', 'name', 'status', 'email']
+];
+Show::table($data, 'Table Show', $opts);
+$opts['showBorder'] = false;
+Show::table($data, 'No Border Table Show', $opts);
+$opts['bodyStyle'] = 'red';
+$opts['showBorder'] = true;
+Show::table($data, 'Change Style Table Show', $opts);
+$opts['bodyStyle'] = '';
+$opts['showBorder'] = true;
+$opts['columns'] = [];
+Show::table($data, 'No Head Table Show', $opts);t
+```
+
 渲染效果
 
 {{< figure library="true" src="table-show.png" numbered="false" lightbox="true">}}
@@ -560,7 +601,7 @@ Show::helpPanel([
         '-d' => 'Run the server on daemon.(default: <comment>false</comment>)',
         '-h, --help' => 'Display this help message'
     ],
-], false);
+]);
 ```
 
 渲染效果

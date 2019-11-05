@@ -91,7 +91,7 @@ Swoft Framework 的优点：
 
 Swoft 官方 QQ 群 1：[548173319](https://jq.qq.com/?_wv=1027&k=5zEn7Bm)（点击添加）
 
-Swoft 官方 QQ 群 2：778656850
+Swoft 官方 QQ 群 2：[778656850](//shang.qq.com/wpa/qunwpa?idkey=af53967551360396bf032588938696214d1aebb202af937d0d1e6265274ae375)（点击添加）
 
 Swoft 社区：[https://learnku.com/swoft](https://learnku.com/swoft)
 
