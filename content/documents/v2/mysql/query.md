@@ -1,5 +1,5 @@
 +++
-title = "查询器"
+title = "查询构造器"
 toc = true
 type = "docs"
 draft = false
