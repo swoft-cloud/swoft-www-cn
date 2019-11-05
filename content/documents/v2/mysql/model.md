@@ -630,3 +630,147 @@ class User
 }
 ```
 
+### 自定义时间格式
+
+该属性决定了存储在数据库中的日期格式以及模型被序列化成数组或 JSON 时的格式。
+
+```php
+/** @var string */
+protected $modelDateFormat = 'Y-m-d H:i:s';
+```
+
+### 自定义字段
+
+如果数据库中使用了其它名称的时间字段，通过设置常量 `CREATED_AT` 以及 `UPDATED_AT` 变更。
+
+```php
+protected const CREATED_AT = 'add_time';
+protected const UPDATED_AT = 'update_time';
+```
+
+{{% alert warning %}}
+
+框架自动维护 `CREATED_AT` 和 `UPDATED_AT` 字段必须要有与之对应的 `getter` 和 `setter`。
+
+{{% /alert %}}
+
+## 事件
+
+`Eloquent` 模型会触发事件，可以在模型的生命周期的以下几点进行监控：`creating`、`created`、`updating`、`updated`、`saving`、`saved`、`deleting`、`deleted`。
+
+事件能在每次在数据库中保存或更新特定模型类时轻松地执行代码，当然你完全可以通过 `AOP` 来实现它。
+
+当新模型第一次被保存时，`creating` 以及 `created` 事件会被触发，而如果模型已经存在于数据库中并且调用了 `save` 方法时，则会触发 `updating` 和 `updated` 事件。在这两种情况下，`saving`/`saved` 事件都会触发。
+
+事件名称由 `swoft.model` + 模型名 + 动作名 组成。
+
+- 模型名：首字母默认为小写，例如实体名称 `SendMessage` 在监听 `saving` 动作时，格式为 `swoft.model.sendMessage.saving`。
+
+### 单模型单动作监听
+
+```php
+<?php declare(strict_types=1);
+
+namespace App\Listener;
+
+use App\Model\Entity\User;
+use Swoft\Event\Annotation\Mapping\Listener;
+use Swoft\Event\EventHandlerInterface;
+use Swoft\Event\EventInterface;
+
+/**
+ * Class UserSavingListener
+ *
+ * @since 2.0
+ *
+ * @Listener("swoft.model.user.saving")
+ */
+class UserSavingListener implements EventHandlerInterface
+{
+    /**
+     * @param EventInterface $event
+     */
+    public function handle(EventInterface $event): void
+    {
+        /* @var User $user */
+        $user = $event->getTarget();
+
+        if ($user->getAge() > 100) {
+            // stopping saving
+            $event->stopPropagation(true);
+
+            $user->setAdd(100);
+        }
+    }
+}
+```
+
+### 多模型单动作监听
+
+```php
+<?php declare(strict_types=1);
+
+namespace App\Listener;
+
+use App\Model\Entity\User;
+use Swoft\Db\DbEvent;
+use Swoft\Db\Eloquent\Model;
+use Swoft\Event\Annotation\Mapping\Listener;
+use Swoft\Event\EventHandlerInterface;
+use Swoft\Event\EventInterface;
+
+/**
+ * Class RanListener
+ *
+ * @since 2.0
+ *
+ * @Listener(DbEvent::MODEL_SAVED)
+ */
+class ModelSavedListener implements EventHandlerInterface
+{
+    /**
+     * @param EventInterface $event
+     */
+    public function handle(EventInterface $event): void
+    {
+        /* @var Model $modelStatic */
+        $modelStatic = $event->getTarget();
+
+        if ($modelStatic instanceof User) {
+            // to do something....
+        }
+
+        // ....
+    }
+}
+```
+
+### 公共事件
+
+完整列表参考 [DbEvent.php](https://github.com/swoft-cloud/swoft-db/blob/master/src/DbEvent.php) 文件。
+
+| 事件                            | 参数                                                       | 描述                                                  |
+| -------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `swoft.db.transaction.begin`     | 无                                                   | 事务启动                                                   |
+| `swoft.db.transaction.commit`    | 无                                                    | 事务提交                                                   |
+| `swoft.db.transaction.rollback`  | 无                                                    | 事务回滚                                                   |
+| `swoft.model.saving`             | `target`：具体操作实体类                                   | 实体保存中事件                                    |
+| `swoft.model.saved`              | `target`：具体操作实体类                      | 实体已保存事件                                        |
+| `swoft.model.updating`           | `target`：具体操作实体类                      | 实体更新中事件                                      |
+| `swoft.model.updated`            | `target`：具体操作实体类                      | 实体已更新事件                                      |
+| `swoft.model.creating`           | `target`：具体操作实体类                      | 实体创建中事件                                      |
+| `swoft.model.created`            | `target`：具体操作实体类                      | 实体已创建事件                                         |
+| `swoft.model.deleting`           | `target`：具体操作实体类                      | 实体删除中事件                                     |
+| `swoft.model.deleted`            | `target`：具体操作实体类                      | 实体已删除事件                                      |
+| `swoft.db.ran`                   | `target`：连接对象<br>`参数 1`：预处理 SQL<br>`参数 2`：绑定参数 | 所有 SQL 已执行事件 |
+| `swoft.db.affectingStatementing` | `target`：连接对象<br>`参数 1`：正在处理的 `PDO statement`<br>`参数 2`：绑定参数 | `update` 和 `delete` 正在执行事件                     |
+| `swoft.db.selecting`             | `target`：连接对象<br>`参数 1`：正在处理的 `PDO statement`<br>`参数 2`：绑定参数 | 查询中事件                                  |
+
+> 对 **正在进行时（ing）**监听事件中调用了 `$event->stopPropagation(true);` 时，后续操作会被终止并直接返回结果。无法对 **已完成（ed）** 事件执行停止操作。
+
+## FAQ
+
+使用模型时建议使用 `select` 方法，尽量不要使用 `AS`，可能会导致查询结果与实体映射问题。
+
+> 使用模型方法执行 **更新/插入** 时会进行过滤处理，没有定义 `@Column` 标签的值将会被过滤。
+
