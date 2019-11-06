@@ -331,3 +331,233 @@ class UserServiceV2 implements UserInterface
 ## RPC Client
 
 服务调用方法，通过使用服务提供方法，提供的lib接口，调用接口实现服务，不需要了解实现细节。
+
+### RPC Client 配置参数
+
+```php
+return [
+    'user'       => [
+        'class'   => ServiceClient::class,
+        'host'    => '127.0.0.1',
+        'port'    => 18307,
+        'setting' => [
+            'timeout'         => 0.5,
+            'connect_timeout' => 1.0,
+            'write_timeout'   => 10.0,
+            'read_timeout'    => 0.5,
+        ],
+        'packet'  => bean('rpcClientPacket')
+    ],
+    'user.pool'  => [
+        'class'  => ServicePool::class,
+        'client' => bean('user')
+    ],
+];
+```
+
+如上定义了一个 `user` 服务，连接池配置参数和其它一样。
+
+### 使用 RPC Client
+
+```php
+/**
+ * Class RpcController
+ *
+ * @since 2.0
+ *
+ * @Controller()
+ */
+class RpcController
+{
+    /**
+     * @Reference(pool="user.pool")
+     *
+     * @var UserInterface
+     */
+    private $userService;
+
+    /**
+     * @Reference(pool="user.pool", version="1.2")
+     *
+     * @var UserInterface
+     */
+    private $userService2;
+
+    /**
+     * @RequestMapping("getList")
+     *
+     * @return array
+     */
+    public function getList(): array
+    {
+        $result  = $this->userService->getList(12, 'type');
+        $result2 = $this->userService2->getList(12, 'type');
+
+        return [$result, $result2];
+    }
+
+    /**
+     * @RequestMapping("returnBool")
+     *
+     * @return array
+     */
+    public function returnBool(): array
+    {
+        $result = $this->userService->delete(12);
+
+        if (is_bool($result)) {
+            return ['bool'];
+        }
+
+        return ['notBool'];
+    }
+
+    /**
+     * @RequestMapping()
+     *
+     * @return array
+     */
+    public function bigString(): array
+    {
+        $string = $this->userService->getBigContent();
+
+        return ['string'];
+    }
+}
+```
+
+### @Reference 注解
+
+* `pool` 指定使用那个服务的连接池(使用那个服务)
+* `version` 指定服务的版本
+
+### 非 Swoft 框架调用
+
+默认消息协议是 `json-rpc`， 所以我们按照这个格式就可以了，需要注意的是，默认消息协议是以 `\r\n\r\n` 结尾的。
+
+这里 method 的格式为 `"{version}::{class_name}::{method_name}"`。
+
+```json
+{
+    "jsonrpc": "2.0",
+    "method": "{version}::{class_name}::{method_name}",
+    "params": [],
+    "id": "",
+    "ext": []
+}
+```
+
+**示例：** 如果使用默认消息协议，可以按照如下方式进行封装
+
+```php
+<?php
+
+const RPC_EOL = "\r\n\r\n";
+
+function request($host, $class, $method, $param, $version = '1.0', $ext = []) {
+    $fp = stream_socket_client($host, $errno, $errstr);
+    if (!$fp) {
+        throw new Exception("stream_socket_client fail errno={$errno} errstr={$errstr}");
+    }
+
+    $req = [
+        "jsonrpc" => '2.0',
+        "method" => sprintf("%s::%s::%s", $version, $class, $method),
+        'params' => $param,
+        'id' => '',
+        'ext' => $ext,
+    ];
+    $data = json_encode($req) . RPC_EOL;
+    fwrite($fp, $data);
+
+    $result = '';
+    while (!feof($fp)) {
+        $tmp = stream_socket_recvfrom($fp, 1024);
+
+        if ($pos = strpos($tmp, RPC_EOL)) {
+            $result .= substr($tmp, 0, $pos);
+            break;
+        } else {
+            $result .= $tmp;
+        }
+    }
+
+    fclose($fp);
+    return json_decode($result, true);
+}
+
+$ret = request('tcp://127.0.0.1:18307', \App\Rpc\Lib\UserInterface::class, 'getList',  [1, 2], "1.0");
+
+var_dump($ret);
+```
+
+## 1.0RPC
+
+如果系统之前使用的是 `Swoft 1.0 RPC server`，`Swoft 2.0` 定义了一种兼容 `1.0 RPC` 协议，使用很简单。
+
+> Available: >= v2.0.3
+
+### 配置
+
+使用 2.0 框架中调用 1.0 RPC server 提供的服务，首先必须配置 (app/bean.php) 1.0 RPC 协议。
+
+```php
+return [
+    // ...
+    'user'             => [
+        'class'   => ServiceClient::class,
+        'host'    => '127.0.0.1',
+        'port'    => 8099,
+        'setting' => [
+            'timeout'         => 0.5,
+            'connect_timeout' => 1.0,
+            'write_timeout'   => 10.0,
+            'read_timeout'    => 0.5,
+            'package_eof'     => "\r\n",
+        ],
+        'packet'  => bean('rpcClientSwoftPacketV1')
+    ],
+
+    // ...
+];
+```
+
+* `host/port` 配置 1.0 地址和端口即可
+* `package_eof` 必须配置数据包结尾符，1.0 包结尾符是 `\r\n`
+* `packet` 必须配置使用 `bean('rpcClientSwoftPacketV1') 1.0` 打包器
+
+### 使用
+
+以上配置完成后，就可以直接使用了。这里直接以调用 Swoft 1.x 的 `App\Lib\DemoInterface` 为例:
+
+```php
+/**
+ * Class RpcController
+ *
+ * @since 2.0
+ *
+ * @Controller()
+ */
+class RpcController
+{
+    /**
+     * @Reference(pool="user.pool", version="0")
+     *
+     * @var DemoInterface
+     */
+    private $demoServcie;
+
+    /**
+     * @RequestMapping(route="swoftV1")
+     *
+     * @return array
+     */
+    public function swoftV1():array {
+        return [$this->demoServcie->getUser('1')];
+    }
+}
+```
+
+* 调用 1.x RPC `version` 必须指定，因为 2.x 与 1.0 默认值不一样
+* 不能调用 1.x 的 `deferXxxx` 方法 2.0 已经丢弃
+* 2.x 里面调用的接口必须和 1.x 接口命名空间、类名以及方法名称参数完全一样。
