@@ -24,7 +24,7 @@ GitHub: [https://github.com/swoft-cloud/swoft-event](https://github.com/swoft-cl
 
 ## 安装
 
-默认情况下事件组件已包含在 Swoft 框架中，如需重新安装只需执行下方命令： 
+默认情况下事件组件已包含在 Swoft 框架中，如需单独安装只需执行下方命令： 
 
 ```bash
 composer require swoft/event
@@ -81,8 +81,6 @@ swoft.udp.after
     例如 `@Listener("swoft.db.*")`，此时所有以 `swoft.db.` 为前缀的事件（例如 `swoft.db.query`、`swoft.db.connect`）都会被此监听器所监听。
 
 > 在事件到达监听器前停止本次事件的传播 `$event->stopPropagation(true)` 时，后面的监听器将不会收到该事情。
-
-https://github.com/inhere/php-event-manager/blob/master/README.md)
 
 ## 如何使用
 
@@ -341,7 +339,7 @@ class MasterStartListener implements EventHandlerInterface
 
 ## 自定义事件
 
-更多自定义事件介绍参考：[https://github.com/inhere/php-event-manager/blob/master/README.md](
+更多自定义事件介绍参考：[https://github.com/inhere/php-event-manager/blob/master/README.md](https://github.com/inhere/php-event-manager/blob/master/README.md)
 
 ## 参与贡献
 
