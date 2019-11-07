@@ -14,14 +14,31 @@ weight = 804
 
 +++
 
-## 概念介绍
+## 简介
 
-概念介绍
+如果你需要在同一个操作中向服务端发送多个命令，推荐你使用管道命令（Pipeline）。`pipeline` 方法接收一个带有 Redis 实例的闭包函数。你可以将所有需要执行的命令发送给这个 Redis 实例，它们会一次性执行完毕。
 
-## 如何使用
+## 示例
 
-如何使用
+比如连续设置 10 个 Key，返回值为数组，你可以通过遍历判断是否全部执行成功：
 
-## 使用示例
+```php
+public function demoPipeline()
+{
+    $count  = 10;
 
-使用示例
+    $result = Redis::pipeline(function (Redis $redis) use ($count) {
+        for ($i = 0; $i < $count; $i++) {
+            $redis->set("key:{$i}", $i);
+        }
+    });
+
+   // count($result) == $count;
+
+    foreach ($result as $index => $value) {
+      // $index 命令索引
+      // $value == true 或 $value == false
+    }
+}
+```
+

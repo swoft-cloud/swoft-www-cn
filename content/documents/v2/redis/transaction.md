@@ -14,14 +14,40 @@ weight = 803
 
 +++
 
-## 概念介绍
+## 简介
 
-概念介绍
+Redis 事务不支持回滚，但能保证原子性。但通过 `lua` 脚本也能实现 Redis 事务效果。
 
-## 如何使用
+## 示例
 
-如何使用
+事务操作的返回数据比较特殊，返回偶数为是否成功，奇数为执行 `key`。下方为一个结果遍历的事务操作示例：
 
-## 使用示例
+```php
+$count = 2;
 
-使用示例
+$result = Redis::transaction(function (Redis $redis) use ($count) {
+    for ($i = 0; $i < $count; $i++) {
+        $key = "key:{$i}";
+        $redis->set($key, $i);
+        $redis->get($key);
+    }
+});
+
+/*
+$result = array(4) {
+    [0] => bool(true)
+    [1] => int(0)
+    [2] => bool(true)
+    [3] => int(1)
+}*/
+
+foreach ($result as $index => $value) {
+    if ($index % 2 == 0) {
+        // 是否执行成功
+        if ($value) {
+            // TODO:
+        }
+    }
+}
+```
+

@@ -11,6 +11,7 @@ weight = 801
   parent = "redis"
   weight = 1
   identifier = "redis-config"
+
 +++
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/swoft/redis.svg)](https://packagist.org/packages/swoft/redis)
@@ -118,6 +119,53 @@ return [
 
 {{% /alert %}}
 
+### 集群连接池配置
+
+```php
+'redis-clusters' => [
+    'class'  => Swoft\Redis\RedisDb::class,
+    'option' => [
+        'timeout'    => 10,
+        'persistent' => true
+    ],
+    'clusters' => [
+        [
+            'host'         => '127.0.0.1',
+            'port'         => 6379,
+            'password'     => '123456',
+            'database'     => 1,
+            'prefix'       => 'Swoft-Clusters',
+            'read_timeout' => 1
+        ]
+    ]
+],
+'redis.clusters-pool' => [
+    'class'       => Swoft\Redis\Pool::class,
+    'redisDb'     => bean('redis-clusters'),
+    'minActive'   => 10,
+    'maxActive'   => 20,
+    'maxWait'     => 0,
+    'maxWaitTime' => 0,
+    'maxIdleTime' => 40
+]
+```
+
+连接池配置项说明：
+
+- `class`：连接池驱动类，仅自定义时需指定。默认为 Swoft 连接池驱动
+- `redisDb`：指定 Redis 配置
+- `minActive`：最少连接数
+- `maxActive`：最大连接数
+- `maxWait`：最大等待连接数，默认为 `0` 无限制
+- `maxWaitTime`：连接最大等待时间，默认为 `0` 秒无限制
+- `maxIdleTime`：连接最大空闲时间，单位秒
+
+集群连接池运用示例：
+
+```php
+Redis::connection('redis.clusters-pool')->get($key);
+```
+
 ### 普通连接池配置
 
 ```php
@@ -134,7 +182,7 @@ return [
         'serializer' => Redis::SERIALIZER_PHP
     ]
 ],
-'redis.pool.2' => [
+'redis.pool-2' => [
     'class'       => Swoft\Redis\Pool::class,
     'redisDb'     => bean('redis-2'),
     'minActive'   => 10,
@@ -145,5 +193,28 @@ return [
 ]
 ```
 
+连接池配置项说明：
 
+- `class`：连接池驱动类，仅自定义时需指定。默认为 Swoft 连接池驱动
+- `redisDb`：指定 Redis 配置
+- `minActive`：最少连接数
+- `maxActive`：最大连接数
+- `maxWait`：最大等待连接数，默认为 `0` 无限制
+- `maxWaitTime`：连接最大等待时间，默认为 `0` 秒无限制
+- `maxIdleTime`：连接最大空闲时间，单位秒
+
+更换默认连接池中的连接配置：
+
+```php
+'redis.pool' => [
+    'class'   => Swoft\Redis\Pool::class,
+    'redisDb' => bean('redis-custom')
+]
+```
+
+之后对 Redis 后的操作所使用的连接为 `redis-custom`：
+
+```php
+Redis::set($key, ['name' => 'Swoft']);
+```
 
