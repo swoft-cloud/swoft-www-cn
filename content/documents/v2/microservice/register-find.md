@@ -222,7 +222,7 @@ class RpcProvider implements ProviderInterface
 * 根据 $client 参数获取当前 RPC 服务信息
 * 根据服务信息，到第三方集群(consul) 里面查询可用服务
 * 返回一个规定格式数组
-* 此类，必须用 `@Bean` 标记为一个 bean 对像 
+* 此类，必须用 `@Bean` 标记为一个 bean 对像
 
 > db / redis 也是支持这种方式发现可用的服务，但是需要实现其相应的接口。
 
