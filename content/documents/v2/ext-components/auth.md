@@ -2,10 +2,10 @@
 title = "Auth"
 toc = true
 type = "docs"
-draft = false
+draft = true
 date = "2018-09-19"
 lastmod = "2018-09-20"
-weight = 92
+weight = 902
 
 [menu.v2]
   parent = "ext-components"

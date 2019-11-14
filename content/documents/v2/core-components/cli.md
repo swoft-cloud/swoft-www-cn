@@ -607,4 +607,3 @@ Show::helpPanel([
 渲染效果
 
 {{< figure library="true" src="fmt-help-panel.png" numbered="false" lightbox="true">}}
-

@@ -1,5 +1,5 @@
 +++
-title = "教程"
+title = "优质教程"
 toc = true
 type = "docs"
 draft = false

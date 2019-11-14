@@ -2,7 +2,7 @@
 title = "Swagger"
 toc = true
 type = "docs"
-draft = false
+draft = true
 date = "2018-09-19"
 lastmod = "2018-09-20"
 weight = 914
