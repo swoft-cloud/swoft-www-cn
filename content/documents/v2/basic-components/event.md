@@ -347,4 +347,4 @@ class MasterStartListener implements EventHandlerInterface
 
 1. Fork 我们的组件仓库：[swoft/component](https://github.com/swoft-cloud/swoft-component)
 2. 修改代码然后发送 PR
-3. 阅读发送 PR 的 [注意事项](https://github.com/swoft-cloud/swoft/issues/829)
+3. 阅读 [提交代码](/documents/v2/contribute/sub-codes/) 的注意事项

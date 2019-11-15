@@ -33,6 +33,7 @@ composer require curtis18/swoft-pgsql
 
 * fork 开发仓库 [curtis18/swoft-pgsql](https://github.com/curtis18/swoft-pgsql)
 * 修改代码然后发起 PR
+* 阅读 [提交代码](/documents/v2/contribute/sub-codes/) 的注意事项
 
 ## 基础配置
 

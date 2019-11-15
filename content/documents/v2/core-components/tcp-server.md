@@ -35,6 +35,7 @@ composer require swoft/tcp-server
 
 * fork 我们的开发仓库 [swoft/component](https://github.com/swoft-cloud/swoft-component)
 * 修改代码然后发起 PR。
+* 阅读 [提交代码](/documents/v2/contribute/sub-codes/) 的注意事项
 
 ## 功能特色
 

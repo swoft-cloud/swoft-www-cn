@@ -35,6 +35,7 @@ composer require swoft/whoops
 
 * fork 开发仓库 [swoft/whoops](https://github.com/swoft-cloud/swoft-whoops)
 * 修改代码然后发起 PR
+* 阅读 [提交代码](/documents/v2/contribute/sub-codes/) 的注意事项
 
 ## 作为中间件使用
 
