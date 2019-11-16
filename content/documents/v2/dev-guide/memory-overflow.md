@@ -6,11 +6,11 @@ draft = false
 date = "2018-09-19"
 lastmod = "2018-09-20"
 
-weight = 105
+weight = 206
 
 [menu.v2]
-  parent = "dev-basis"
-  weight = 5
+  parent = "dev-guide"
+  weight = 6
 
   
 +++

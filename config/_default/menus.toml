@@ -67,10 +67,6 @@
   weight = 1
   url = "/documents/v2/"
 [[v2]]
-  name = "开发基础"
-  weight = 10
-  identifier = "dev-basis"
-[[v2]]
   name = "开发指南"
   weight = 20
   identifier = "dev-guide"

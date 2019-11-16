@@ -1,18 +1,19 @@
 +++
-title = "传统 PHP-FPM"
+title = "开发注意事项"
 toc = true
 type = "docs"
 draft = false
 date = "2018-09-19"
 lastmod = "2018-09-20"
 
-weight = 102
+weight = 205
 
 [menu.v2]
-  parent = "dev-basis"
-  weight = 2
-  
-  
+  parent = "dev-guide"
+  weight = 5
+
+
+
 +++
 
 ## 介绍
