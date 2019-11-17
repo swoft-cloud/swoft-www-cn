@@ -5,7 +5,7 @@ active = true  # Activate this widget? true/false
 weight = 30  # Order that this section will appear.
 
 title = "赞助商"
-subtitle = ""
+subtitle = "排名顺序安提交时间排序"
 
 [design]
   # Choose how many columns the section has. Valid values: 1 or 2.
@@ -41,12 +41,11 @@ subtitle = ""
  
  # CSS class.
  css_class = ""
+
+# [[sponsors]]
+# name = "1"
+# site = "https://www.baidu.com"
+# logo = "https://static.westartrack.com/pc/logo.png"
+
 +++
 
-<div class="d-flex justify-content-around align-items-center">
-<a class="mr-3" href="#"><img src="img/icon.png" /></a>
-<a class="mr-3" href="#"><img src="img/icon.png" /></a>
-<a class="mr-3" href="#"><img src="img/icon.png" /></a>
-<a class="mr-3" href="#"><img src="img/icon.png" /></a>
-<a href="#"><img src="img/icon.png" /></a>
-</div>

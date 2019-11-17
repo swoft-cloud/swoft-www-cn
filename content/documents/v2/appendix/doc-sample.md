@@ -5,11 +5,11 @@ type = "docs"
 draft = false
 date = "2018-09-19"
 lastmod = "2018-09-20"
-weight = 1206
+weight = 1205
 
 [menu.v2]
   parent = "appendix"
-  weight = 6
+  weight = 5
 +++
 
 组件功能介绍和使用场景

@@ -9,6 +9,13 @@
     margin: 15px;
 }
 
+#sponsor #logos img {
+    transition: all 0.3s ease;
+    max-width: 140px;
+    max-height: 90px;
+    margin: 15px;
+}
+
 
 /* modify docs width */
 
@@ -177,4 +184,8 @@ h6 {
 
 .article-style p a img {
     display: inline-block;
+}
+
+.btn{
+    font-size: 1.2rem;
 }

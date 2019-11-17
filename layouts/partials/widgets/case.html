@@ -16,13 +16,16 @@
     {{ with $st.Title }}<h1>{{ . | markdownify | emojify }}</h1>{{ end }}
     {{ with $st.Params.subtitle }}<p>{{ . | markdownify | emojify }}</p>{{ end }}
     {{ $st.Content }}
-    <div id="logos" class="d-flex justify-content-center align-items-center">
-
-    </div>
-    <a href="/" class="btn btn-outline-primary rounded-pill" role="button" aria-pressed="true">
-      加入您的案例
-    </a>
   </div>
 </div>
 {{ end }}
+
+</div>
+
+<div id="logos" class="row">
+</div>
+<div class="text-center">
+  <a href="/" class="btn btn-outline-primary rounded-pill" role="button" aria-pressed="true">
+    加入您的案例
+  </a>
 </div>

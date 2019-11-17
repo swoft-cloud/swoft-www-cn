@@ -5,7 +5,7 @@ active = true  # Activate this widget? true/false
 weight = 40  # Order that this section will appear.
 
 title = "案例"
-subtitle = ""
+subtitle = "排名顺序安提交时间排序"
 
 [design]
   # Choose how many columns the section has. Valid values: 1 or 2.

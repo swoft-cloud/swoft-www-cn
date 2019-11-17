@@ -2,7 +2,19 @@ $.get("https://api.github.com/repos/swoft-cloud/swoft-case/contents/case.json", 
     let obj = JSON.parse(decodeURIComponent(escape(atob(data.content))))
     let ele = $('#case #logos')
     obj.forEach(element => {
-        let logo = '<a href="' + element.siteUrl + '" target="_blank" title="' + element.name + '"><img src="' + element.logoUrl + '" alt="logo" /></a>'
-        ele.append(logo)
+        let newCard = document.createElement("div");
+        newCard.className = "card m-3"
+        let newLink = document.createElement("a");
+        newLink.href = element.siteUrl;
+        newLink.rel = "nofollow";
+        let newImg = new Image();
+        newImg.src = element.logoUrl;
+        newImg.alt = element.name;
+        newImg.className = "card-img-top";
+        newImg.style = "width:100px";
+        newLink.appendChild(newImg);
+        newCard.appendChild(newLink);
+        ele.append(newCard)
+
     });
 })
