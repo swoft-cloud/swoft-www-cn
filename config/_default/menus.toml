@@ -107,11 +107,33 @@
   name = "微服务"
   weight = 100
   identifier = "microservice"
-  [[v2]]
+[[v2]]
   name = "贡献"
   weight = 110
   identifier = "contribute"
-  [[v2]]
+[[v2]]
   name = "附录"
   weight = 120
   identifier = "appendix"
+
+# v1文档一级菜单
+[[v1]]
+  name = "框架概述"
+  weight = 1
+  url = "/documents/v1/"
+[[v1]]
+  name = "基础信息"
+  weight = 10
+  identifier = "base-info"
+[[v1]]
+  name = "框架核心"
+  weight = 20
+  identifier = "framework-core"
+[[v1]]
+  name = "组件列表"
+  weight = 30
+  identifier = "component-list"
+[[v1]]
+  name = "其他"
+  weight = 40
+  identifier = "other"
