@@ -41,7 +41,7 @@ Swoft 的一切都是建立在 [Swoole](https://wiki.swoole.com) 扩展之上运
 
 下面是一张请求生命周期的流程示意图：  
 
-![RequestLifecycle](../images/request-lifecycle.png)  
+{{< figure library="true" src="v1-request-lifecycle.png" numbered="false" lightbox="true">}}
 
 ### RPC Server
 

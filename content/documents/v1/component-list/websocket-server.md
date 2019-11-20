@@ -286,7 +286,8 @@ class EchoController implements HandlerInterface
 
 效果截图：
 
-![ws-test-page](../images/ws-test-page.jpg)
+{{< figure library="true" src="v1-ws-test-page.jpg" numbered="false" lightbox="true">}}
+
 
 
 > 当然也可在网上找一个 ws test网页来进行测试

@@ -452,7 +452,7 @@ return [
 
 #### 没有服务注册发现的结构
 
-![没有服务注册发现的结构](../images/consul1.png)
+{{< figure library="true" src="v1-consul1.png" numbered="false" lightbox="true">}}
 
 <center>没有服务发现的架构</center>
 
@@ -462,7 +462,8 @@ return [
 
 #### 有服务注册发现的结构
 
-![有服务注册发现的结构](../images/consul2.png)
+{{< figure library="true" src="v1-consul2.png" numbered="false" lightbox="true">}}
+
 
 <center>有服务注册发现的结构</center>
 

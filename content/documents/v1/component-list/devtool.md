@@ -100,7 +100,8 @@ php bin/swoft dev:publish swoft/devtool -f
 
 5. 如果你能看到下面的截图，说明已经成功安装并启用
 
-![image](../images/devtool.jpg)
+{{< figure library="true" src="v1-devtool.jpg" numbered="false" lightbox="true">}}
+
 
 ### 可能的问题
 
