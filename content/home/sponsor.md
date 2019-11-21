@@ -5,7 +5,7 @@ active = true  # Activate this widget? true/false
 weight = 30  # Order that this section will appear.
 
 title = "赞助商"
-subtitle = "排名顺序安提交时间排序"
+subtitle = "排名顺序按照提交时间排序"
 
 [design]
   # Choose how many columns the section has. Valid values: 1 or 2.
