@@ -17,7 +17,8 @@ RPC，是一种远程调用方式（Remote Procedure Call），通过RPC我们�
 
 ## 单体架构
 
-![单体架构](../images/rpc-server-index1.png)
+{{< figure library="true" src="v1-rpc-server-index1.png" numbered="false" lightbox="true">}}
+
 
 ### 单体架构优点
 
@@ -53,7 +54,8 @@ RPC，是一种远程调用方式（Remote Procedure Call），通过RPC我们�
 
 ## 服务调用
 
-![微服务调用](../images/rpc-server-index2.png)
+{{< figure library="true" src="v1-rpc-server-index2.png" numbered="false" lightbox="true">}}
+
 
 <center>微服务调用</center>
 
@@ -67,7 +69,9 @@ RPC，是一种远程调用方式（Remote Procedure Call），通过RPC我们�
 
 ### RPC调用过程
 
-![RPC的调用过程](../images/rpc-server-index3.png)
+
+{{< figure library="true" src="v1-rpc-server-index3.png" numbered="false" lightbox="true">}}
+
 
 <center>RPC调用过程</center>
 

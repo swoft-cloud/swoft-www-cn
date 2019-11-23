@@ -3,7 +3,7 @@ $.get("https://api.github.com/repos/swoft-cloud/swoft-case/contents/case.json", 
     let ele = $('#case #logos')
     obj.forEach(element => {
         let newCard = document.createElement("div");
-        newCard.className = "card m-3"
+        newCard.className = "card m-3 d-flex flex-column justify-content-center"
         let newLink = document.createElement("a");
         newLink.href = element.siteUrl;
         newLink.rel = "nofollow";

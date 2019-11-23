@@ -47,6 +47,20 @@
           <p>{{ i18n "last_updated" }} {{ $.Lastmod.Format site.Params.date_format }}</p>
 
           {{ partial "page_edit" . }}
+      
+          <div class="row d-flex justify-content-start align-items-center">
+            <div class="col-4">
+              <p>关注我们</p>
+              <img src="/img/weixin-gzh-qrcode.png"  alt="关注我们">
+            </div>
+            <div class="col-4">
+              <p>支持我们</p>
+              <div class="d-flex">
+                <img src="/img/wxpay-qrcode.png" width="100px" alt="支持我们">
+                <img src="/img/alipay-qrcode.png" width="100px" alt="支持我们">
+              </div>
+            </div>
+          </div>
 
           {{ partial "comments" . }}
         </div>

@@ -11,10 +11,12 @@
   </p>
   {{ end }}
 
+  <p>遵循 APACHE V2 开源协议</p>
+
   <p class="powered-by">
     {{ with site.Copyright }}{{ replace . "{year}" now.Year | markdownify}} &middot; {{ end }}
 
-    All rights reserved
+    版权所有，并保留所有权利
 
     {{ if ne .Type "docs" }}
     <span class="float-right" aria-hidden="true">
@@ -26,4 +28,5 @@
     </span>
     {{ end }}
   </p>
+  <p>蜀ICP备14029317号-1</p>
 </footer>
