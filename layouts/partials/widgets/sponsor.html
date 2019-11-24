@@ -12,7 +12,7 @@
 <div id="logos" class="row">
 
   {{ range $st.Params.sponsors }}
-  <div class="card m-3">
+  <div class="card m-3 d-flex flex-column justify-content-center">
     <a href="{{ .site }}" rel="nofollow">
       <img src="{{ .logo }}" alt="{{ .name }}" class="card-img-top" style="width: 100px;">
     </a>
