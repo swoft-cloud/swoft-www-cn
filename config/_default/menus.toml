@@ -47,6 +47,7 @@
   name = "English"
   weight = 51
   parent = "translations"
+  url = "http://swoft.io/"
 
 [[main]]
   name = "中文"
