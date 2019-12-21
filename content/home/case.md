@@ -42,6 +42,15 @@ subtitle = "排名顺序按照提交时间排序"
  # CSS class.
  css_class = ""
 
+
+[[case]]
+name = "美菜网"
+company = "北京云杉世界信息技术有限公司"
+releaseDate = "2019-12-07"
+siteUrl = "https://www.meicai.cn/"
+logoUrl = "https://demo6006.wanyucheng.com.cn/uploads/images/sites/2019/11/12/2b5bedf0051e11ea8afac58194fa0a0f.jpg"
+description = "美菜网-中国生鲜移动电商平台"
+  
 [[case]]
 name = "星轨询盘管理"
 company = "郑州悉知信息科技股份有限公司"
@@ -49,8 +58,7 @@ releaseDate = "2018-12-25"
 siteUrl = "https://www.westartrack.com/"
 logoUrl = "https://static.westartrack.com/pc/logo.png"
 description = "星轨询盘管理是一款专门为企业开发的一套询盘管理信息系统，主要解决企业在信息流转过程中的跟踪和管理。"
-
-
+  
 [[case]]
 name = "妈咪店收银系统"
 company = "南京多麦信息技术有限公司"
@@ -58,8 +66,7 @@ releaseDate = "2018-03-13"
 siteUrl = "http://www.mamidian.com/"
 logoUrl = "http://img2.ciurl.cn/flashsale/upload/default-logo-mamidian.png"
 description = "妈咪店母婴新零售系统，重新定义互联网智慧母婴"
-
-
+  
 [[case]]
 name = "渝欧股份"
 company = "重庆渝欧跨境电子商务股份有限公司"
@@ -68,8 +75,7 @@ logoUrl = "http://nwzimg.wezhan.cn/contents/sitefiles2030/10150711/images/776643
 coverUrl = "http://nwzimg.wezhan.cn/contents/sitefiles2030/10150711/images/7766431.png"
 siteUrl = "http://www.yuoucn.com/"
 description = "全国跨境电商首批试点企业，主要从事母婴类消费品跨境进口的国有控股混合制跨境电商平台"
-
-
+  
 [[case]]
 name = "新潮售卖平台"
 company = "新潮传媒"
@@ -78,8 +84,7 @@ logoUrl = "https://www.xinchao.com/img/logo.9cee6484.png"
 coverUrl = "https://www.xinchao.com/img/logo.9cee6484.png"
 siteUrl = "https://www.xinchao.com"
 description = "新潮售卖平台网关服务"
-
-
+  
 [[case]]
 name = "优信集团"
 company = "优信集团"
@@ -88,8 +93,7 @@ logoUrl = "https://s1.xinstatic.com/xin/images/common/logo.png"
 coverUrl = "https://s1.xinstatic.com/xin/images/common/logo.png"
 siteUrl = "https://www.xin.com"
 description = "内部服务系统研发"
-
-
+  
 [[case]]
 name = "闪修侠"
 company = "闪修侠"
@@ -98,5 +102,14 @@ logoUrl = "https://gss3.bdstatic.com/84oSdTum2Q5BphGlnYG/timg?wapp&quality=80&si
 coverUrl = "https://gss3.bdstatic.com/84oSdTum2Q5BphGlnYG/timg?wapp&quality=80&size=b150_150&subsize=20480&cut_x=0&cut_w=0&cut_y=0&cut_h=0&sec=1369815402&srctrace&di=e0f98cc7022cf675796fbdf799692e1e&wh_rate=null&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fpic%2Fitem%2Fb64543a98226cffc0a8069d7b0014a90f603ea29.jpg"
 siteUrl = "http://www.shanxiuxia.com/"
 description = "多业务线开发，涉及支付系统，对外api接口等"
-
+  
+[[case]]
+name = "省小二"
+company = "四川省邦图商务服务有限责任公司"
+releaseDate = "2011-12-01"
+logoUrl = "https://cdn.shengxiao2.com/images/logo/logo.jpeg"
+coverUrl = "https://cdn.shengxiao2.com/images/logo/logo.jpeg"
+siteUrl = "http://shengxiao2.com/"
+description = "为2亿车主提供综合生活服务"
+ 
 +++
