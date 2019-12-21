@@ -14,7 +14,7 @@
 [js.highlight]
   version = "9.15.10"
   sri = "sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0="
-  url = "https://cdn.jsdelivr.net/npm/highlight.js@%s/lib/index.min.js"
+  url = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/%s/highlight.min.js"
 [js.mathJax]
   version = "3"
   sri = ""  # No SRI as dynamically generated.
@@ -46,7 +46,7 @@
 [js.mark]
   version = "8.11.1"
   sri = "sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U="
-  url = "https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/jquery.mark.min.js"
+  url = "https://cdn.jsdelivr.net/npm/mark.js@%s/dist/jquery.mark.min.js"
 [js.instantsearch]
   version = "2.10.2"
   sri = "sha256-gFCtPk/sonctyfwYOgjrPoWApQ0rqB6ezBBZ7p32yGc="
