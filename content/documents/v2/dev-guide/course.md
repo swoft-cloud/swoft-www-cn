@@ -34,6 +34,7 @@ weight = 204
 
 - [Swoft2.x 学习社区](https://learnku.com/swoft)
 - [Swoft2.x 从入门到微服务](https://www.kancloud.cn/sphynx/swoft)
+- [Swoft2.x 小白系列教程](https://8code.net/index/index/blog/type/back)
 
 ### 视频
 
