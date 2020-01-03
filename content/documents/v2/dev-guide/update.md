@@ -27,6 +27,10 @@ weight = 201
 **更新(Update)**:
 
 - 调整 路由没找到时抛出的异常将会携带错误 code [7e06afa](https://github.com/swoft-cloud/swoft-component/pull/544/commits/7e06afa86419cd5f0175646615ad18cfaa96882c)
+- 新增 验证器严格模式 [0a6cd60](https://github.com/swoft-cloud/swoft-component/pull/545/commits/0a6cd60560378a834c50de640e05529b35e34bc5)
+- 新增 验证器 @Required 规则 [b1a0758](https://github.com/swoft-cloud/swoft-component/pull/545/commits/b1a07581bb26cb81639f0e19fc8a64051ec088d3)
+- 新增 验证器支持 Path 路径参数验证 [5315274](https://github.com/swoft-cloud/swoft-component/pull/545/commits/5315274a13068f3502af3abdbc1734088c341fda)
+- 新增 验证器 i18n 文案支持 [bcc58a4](https://github.com/swoft-cloud/swoft-component/pull/545/commits/bcc58a41c26cff106c5f4b64678483b6a1cbf012)
 
 **增强(Enhancement)**：
 
