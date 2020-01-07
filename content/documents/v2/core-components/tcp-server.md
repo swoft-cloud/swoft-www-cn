@@ -247,11 +247,11 @@ class TcpConnectListener implements EventHandlerInterface
     public function handle(EventInterface $event): void
     {
 
-        /* @var \Swoole\Server $server */
-        $server = $event->getTarget();
+        /* @var int $fd */
+        $fd = $event->getTarget();
 
         var_dump(
-          $event->getParam(0), // fd
+          $event->getParam(0), // Swoole server
           $event->getParam(1), // reactorId
         );
     }
@@ -264,6 +264,10 @@ class TcpConnectListener implements EventHandlerInterface
 
 tcp server 新增两个注解 `@TcpController` 和 `@TcpMapping`，由他们定义 tcp 控制器和处理方法。
 
+自 `v2.0.7` 开始支持添加全局中间件和指定控制器或方法的中间件。
+
+> 如果你不想使用内置的路由处理，请跳过这一节，查看下面的 **自定义接收处理**
+
 ### @TcpController 注解
 
 类注解 `@TcpControler` 标记当前类是一个 `Tcp` 控制器。
@@ -272,6 +276,7 @@ tcp server 新增两个注解 `@TcpController` 和 `@TcpMapping`，由他们定�
 * 作用范围：`CLASS`
 * 拥有属性：
   * `prefix` _string_ 数据路由前缀，为空自动解析类名称为前缀。
+  * `middlewares` _string[]_ 中间件，自 `v2.0.7` 开始支持中间件
 
 ### @TcpMapping
 
@@ -281,7 +286,8 @@ tcp server 新增两个注解 `@TcpController` 和 `@TcpMapping`，由他们定�
 * 作用范围：`METHOD`
 * 拥有属性：
   * `route` _string_ 命令名称，为空自动使用方法名称。
-  * `root` _bool_ 命令名称是否是顶级命令。默认 `false`
+  * `root` _bool_ 命令名称是否是顶级命令，是则不会再添加控制器的 `prefix`。默认 `false`
+  * `middlewares` _string[]_ 中间件，自 `v2.0.7` 开始支持中间件
 
 {{%alert note%}}
 
@@ -297,6 +303,7 @@ tcp server 新增两个注解 `@TcpController` 和 `@TcpMapping`，由他们定�
 
 namespace App\Tcp\Controller;
 
+use App\Tcp\Middleware\DemoMiddleware;
 use Swoft\Tcp\Server\Annotation\Mapping\TcpController;
 use Swoft\Tcp\Server\Annotation\Mapping\TcpMapping;
 use Swoft\Tcp\Server\Request;
@@ -305,7 +312,7 @@ use Swoft\Tcp\Server\Response;
 /**
  * Class DemoController
  *
- * @TcpController()
+ * @TcpController(middlewares={DemoMiddleware::class})
  */
 class DemoController
 {
@@ -490,3 +497,62 @@ var_dump($ret);
 当然，最方便直接的就是使用我们 `devtool` 包里提供的 `dclient:tcp` 工具命令。
 
 运行：`php bin/swoft dclient:tcp -h` 查看命令帮助。
+
+## 自定义接收处理
+
+如果你不想使用swoft自带的路由处理，swoft 也可以支持自定义数据接收后的处理逻辑。
+
+> 自定义接收处理不支持中间件，处理流程都由用户自己控制。
+
+首先，你需要关闭内置的路由解析处理：
+
+```php
+  'tcpDispatcher' => [
+    'enable' => false,
+  ]
+```
+
+然后，监听 `TcpServerEvent::RECEIVE_BEFORE` 事件：
+
+```php
+
+<?php declare(strict_types=1);
+
+namespace App\Listener;
+
+use Swoft\Event\Annotation\Mapping\Listener;
+use Swoft\Event\EventHandlerInterface;
+use Swoft\Event\EventInterface;
+use Swoft\Tcp\Server\TcpServerEvent;
+
+/**
+ * Class TcpReceiveListener
+ *
+ * @since 2.0
+ *
+ * @Listener(TcpServerEvent::RECEIVE_BEFORE)
+ */
+class TcpReceiveListener implements EventHandlerInterface
+{
+    /**
+     * @param EventInterface $event
+     */
+    public function handle(EventInterface $event): void
+    {
+        /* @var int $fd */
+        $fd = $event->getTarget();
+
+        var_dump(
+          $event->getParam(0), // Swoole server
+          $event->getParam(1), // reactorId
+        );
+        
+        // 接收到的数据
+        $content = context()->getRequest()->getRawData();
+        
+        // 自定义解析数据和处理
+        // do something ....
+    }
+}
+```
+
