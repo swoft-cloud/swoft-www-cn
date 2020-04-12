@@ -118,7 +118,7 @@ class Test
         return $connection->selectFetchNum("SELECT testid, testname FROM test;");
     }
 
-    public function bindingTest(int $id = 1, string name = "myname"): array
+    public function bindingTest(int $id = 1, string $name = "myname"): array
     {
         $connection = $this->pgsql->createConnection();
         return $connection->select("SELECT * FROM test WHERE testid =  AND testname = ;", array($id, $name));
