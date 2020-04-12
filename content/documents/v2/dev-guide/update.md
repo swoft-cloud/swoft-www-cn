@@ -13,7 +13,20 @@ weight = 201
   weight = 1
 +++
 
-## v2.0.8[WIP]
+## v2.0.9[2020-4-12]
+
+**修复(Fixed)**：
+
+- 修复 MySQL 8.0 生成实体主键位置错误 [e437d36](https://github.com/swoft-cloud/swoft-ext/commit/e437d36bc56d3b9b3abd2b2f9a9476f0e14237f7)
+
+**更新(Update)**:
+
+- 连接池关闭连接, 如果连接已经断开, 异常将会被忽略 [7aac80da](https://github.com/swoft-cloud/swoft-component/commit/7aac80da2ecbc11a6b869e4ba2a83284d3fdcab0)
+
+**增强(Enhancement)**：
+
+
+## v2.0.8[2020-1-18]
 
 **修复(Fixed)**：
 
