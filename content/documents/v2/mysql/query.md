@@ -4,7 +4,7 @@ toc = true
 type = "docs"
 draft = false
 date = "2018-09-19"
-lastmod = "2019-11-03"
+lastmod = "2020-04-21"
 weight = 703
 
 [menu.v2]
@@ -554,6 +554,11 @@ DB::table('users')
     ->forPage($page, $pageSize)
     ->get();
 ```
+
+可以使用我们熟悉的 `paginate` 方法实现分页。
+```php
+DB::table('users')->paginate($page,$pageSize);
+``` 
 
 ### 排序
 
