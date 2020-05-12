@@ -635,6 +635,16 @@ class TestValidator
 使用示例:
 `@Range(min=1,max=5,message="error message")`。
 
+#### @Required
+
+验证规则:
+
+如果属性没有设置默认值时，使用此规则后，若参数传递时没有此字段时会触发拦截。
+
+使用示例:
+`@Required()`。
+
+
 #### @Upper
 
 验证规则:
