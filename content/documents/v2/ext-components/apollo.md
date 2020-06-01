@@ -146,7 +146,7 @@ public function listen(array $namespaces, $callback, array $notifications = [], 
 
 * `$namespaces` 命名空间名称集合数组
 * `$callback` 配置改变监听函数，可以使闭包、对象方法都可以。
-* `$notifications` 监听信息，详细描述参考 Apollo 官放文档
+* `$notifications` 监听信息，详细描述参考 Apollo 官方文档
 * `$clientIp` 客户端IP，为空底层自动获取当前机器IP，用于灰度发布
 
 如果配置改变，监听函数回调的时候会传递一个参数，此参数信息记录了改变后的最新配置信息，比如：
