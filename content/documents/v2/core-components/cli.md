@@ -573,7 +573,7 @@ Show::table($data, 'Change Style Table Show', $opts);
 $opts['bodyStyle'] = '';
 $opts['showBorder'] = true;
 $opts['columns'] = [];
-Show::table($data, 'No Head Table Show', $opts);t
+Show::table($data, 'No Head Table Show', $opts);
 ```
 
 渲染效果
